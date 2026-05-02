@@ -6,10 +6,17 @@
     <meta name="description" content="A note on using Obsidian and Codex as a personal operating system.">
     <title>Obsidian + Codex | Marvin Chan</title>
     <link rel="stylesheet" href="/assets/styles.css">
+    <script src="/assets/site.js" defer></script>
   </head>
   <body>
     <header class="site-header">
-      <a class="site-title" href="/">Marvin Chan</a>
+      <div class="header-left">
+        <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-directory" aria-expanded="true">
+          <span aria-hidden="true">☰</span>
+          <span>Directory</span>
+        </button>
+        <a class="site-title" href="/">Marvin Chan</a>
+      </div>
       <nav aria-label="Primary navigation">
         <a href="/index.html">Home</a>
 <a href="/resume/index.html">Resume</a>
@@ -18,31 +25,31 @@
       </nav>
     </header>
     <div class="site-shell">
-      <aside class="directory" aria-label="Site directory">
+      <aside id="site-directory" class="directory" aria-label="Site directory">
         <div class="directory-inner">
           <p class="directory-label">Directory</p>
-          <section class="directory-section"><h2>Home</h2><ol>
+          <details class="directory-section"><summary>Home</summary><ol>
 <li><a href="/index.html">Home</a></li>
-</ol></section>
-<section class="directory-section"><h2>Resume</h2><ol>
+</ol></details>
+<details class="directory-section"><summary>Resume</summary><ol>
 <li><a href="/resume/index.html">Resume</a></li>
-</ol></section>
-<section class="directory-section"><h2>Projects</h2><ol>
+</ol></details>
+<details class="directory-section"><summary>Projects</summary><ol>
 <li><a href="/projects/index.html">Projects</a></li>
-</ol></section>
-<section class="directory-section"><h2>Library</h2><ol>
+</ol></details>
+<details class="directory-section"><summary>Library</summary><ol>
 <li><a href="/library/index.html">Library</a></li>
-</ol></section>
-<section class="directory-section"><h2>Notes</h2><ol>
+</ol></details>
+<details class="directory-section" open><summary>Notes</summary><ol>
 <li><a href="/notes/finance-control-plane/index.html">Finance Control Plane</a></li>
 <li><a class="active" aria-current="page" href="/notes/obsidian-codex/index.html">Obsidian + Codex</a></li>
-</ol></section>
-<section class="directory-section"><h2>Project Summaries</h2><ol>
+</ol></details>
+<details class="directory-section"><summary>Project Summaries</summary><ol>
 <li><a href="/project-summaries/example-project-summary/index.html">Example Project Summary</a></li>
-</ol></section>
-<section class="directory-section"><h2>Thoughts</h2><ol>
+</ol></details>
+<details class="directory-section"><summary>Thoughts</summary><ol>
 <li><a href="/thoughts/example-thought/index.html">Example Thought</a></li>
-</ol></section>
+</ol></details>
         </div>
       </aside>
       <main class="note">

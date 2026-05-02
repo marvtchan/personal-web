@@ -176,16 +176,23 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
     <meta name="description" content="{description}">
     <title>{title} | Marvin Chan</title>
     <link rel="stylesheet" href="/assets/styles.css">
+    <script src="/assets/site.js" defer></script>
   </head>
   <body>
     <header class="site-header">
-      <a class="site-title" href="/">Marvin Chan</a>
+      <div class="header-left">
+        <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-directory" aria-expanded="true">
+          <span aria-hidden="true">☰</span>
+          <span>Directory</span>
+        </button>
+        <a class="site-title" href="/">Marvin Chan</a>
+      </div>
       <nav aria-label="Primary navigation">
         {nav}
       </nav>
     </header>
     <div class="site-shell">
-      <aside class="directory" aria-label="Site directory">
+      <aside id="site-directory" class="directory" aria-label="Site directory">
         <div class="directory-inner">
           <p class="directory-label">Directory</p>
           {directory}
@@ -216,7 +223,11 @@ def render_directory(current_page: Page, pages: list[Page]) -> str:
     parts: list[str] = []
     for section in ordered_sections:
         heading = section.replace("-", " ").title()
-        parts.append(f'<section class="directory-section"><h2>{html.escape(heading)}</h2><ol>')
+        section_open = " open" if any(page.slug == current_page.slug for page in grouped[section]) else ""
+        parts.append(
+            f'<details class="directory-section"{section_open}>'
+            f'<summary>{html.escape(heading)}</summary><ol>'
+        )
         for page in sorted(grouped[section], key=lambda p: (p.order, p.title.lower())):
             active = ' aria-current="page"' if page.slug == current_page.slug else ""
             class_name = ' class="active"' if page.slug == current_page.slug else ""
@@ -224,7 +235,7 @@ def render_directory(current_page: Page, pages: list[Page]) -> str:
             parts.append(
                 f'<li><a{class_name}{active} href="{href}">{html.escape(page.title)}</a></li>'
             )
-        parts.append("</ol></section>")
+        parts.append("</ol></details>")
 
     return "\n".join(parts)
 

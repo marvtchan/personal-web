@@ -45,10 +45,36 @@ a {
   backdrop-filter: blur(12px);
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .site-title {
   color: var(--ink);
   font-weight: 800;
   text-decoration: none;
+}
+
+.sidebar-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.86rem;
+}
+
+.sidebar-toggle:hover {
+  color: var(--ink);
+  border-color: var(--muted);
 }
 
 nav {
@@ -75,6 +101,18 @@ nav a:hover {
   margin: 0 auto;
 }
 
+body.sidebar-hidden .site-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+body.sidebar-hidden .directory {
+  display: none;
+}
+
+body.sidebar-hidden .note {
+  margin: 0 auto;
+}
+
 .directory {
   min-height: calc(100svh - 85px);
   border-right: 1px solid var(--line);
@@ -97,21 +135,46 @@ nav a:hover {
   text-transform: uppercase;
 }
 
-.directory-section + .directory-section {
-  margin-top: 24px;
+.directory-section {
+  border-top: 1px solid rgba(222, 217, 205, 0.72);
+  padding: 8px 0;
 }
 
-.directory-section h2 {
-  margin: 0 0 8px;
+.directory-section:last-child {
+  border-bottom: 1px solid rgba(222, 217, 205, 0.72);
+}
+
+.directory-section summary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink);
+  cursor: pointer;
   color: var(--ink);
   font-size: 0.78rem;
   font-weight: 850;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  user-select: none;
+}
+
+.directory-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.directory-section summary::before {
+  content: "▸";
+  color: var(--muted);
+  font-size: 0.72rem;
+  transform: translateY(-1px);
+}
+
+.directory-section[open] summary::before {
+  content: "▾";
 }
 
 .directory-section ol {
-  margin: 0;
+  margin: 8px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -230,12 +293,21 @@ footer p {
     flex-direction: column;
   }
 
+  .header-left {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   nav {
     justify-content: flex-start;
   }
 
   .site-shell {
     display: block;
+  }
+
+  body.sidebar-hidden .directory {
+    display: none;
   }
 
   .directory {
