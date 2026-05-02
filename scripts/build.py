@@ -163,6 +163,7 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
         f'<a href="{relative_href(page_href(item.slug))}">{html.escape(item.title)}</a>'
         for item in sorted(nav_pages, key=lambda p: (p.order, p.title.lower()))
     )
+    directory = render_directory(page, pages)
     content = markdown_to_html(page.body, pages_by_slug)
     description = html.escape(page.description)
     title = html.escape(page.title)
@@ -183,15 +184,49 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
         {nav}
       </nav>
     </header>
-    <main class="note">
-      {content}
-    </main>
+    <div class="site-shell">
+      <aside class="directory" aria-label="Site directory">
+        <div class="directory-inner">
+          <p class="directory-label">Directory</p>
+          {directory}
+        </div>
+      </aside>
+      <main class="note">
+        {content}
+      </main>
+    </div>
     <footer>
       <p>Built from Markdown notes.</p>
     </footer>
   </body>
 </html>
 """
+
+
+def render_directory(current_page: Page, pages: list[Page]) -> str:
+    grouped: dict[str, list[Page]] = {}
+    for page in pages:
+        section = "home" if page.slug == "" else page.slug.split("/", 1)[0]
+        grouped.setdefault(section, []).append(page)
+
+    preferred = ["home", "resume", "projects", "library", "notes", "project-summaries", "thoughts"]
+    ordered_sections = [section for section in preferred if section in grouped]
+    ordered_sections.extend(section for section in sorted(grouped) if section not in preferred)
+
+    parts: list[str] = []
+    for section in ordered_sections:
+        heading = section.replace("-", " ").title()
+        parts.append(f'<section class="directory-section"><h2>{html.escape(heading)}</h2><ol>')
+        for page in sorted(grouped[section], key=lambda p: (p.order, p.title.lower())):
+            active = ' aria-current="page"' if page.slug == current_page.slug else ""
+            class_name = ' class="active"' if page.slug == current_page.slug else ""
+            href = relative_href(page_href(page.slug))
+            parts.append(
+                f'<li><a{class_name}{active} href="{href}">{html.escape(page.title)}</a></li>'
+            )
+        parts.append("</ol></section>")
+
+    return "\n".join(parts)
 
 
 def build() -> None:

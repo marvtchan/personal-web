@@ -31,14 +31,18 @@ a {
 }
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 24px;
-  max-width: 900px;
-  margin: 0 auto;
+  width: 100%;
   padding: 28px 22px;
+  background: rgba(251, 250, 246, 0.94);
   border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
 }
 
 .site-title {
@@ -64,9 +68,80 @@ nav a:hover {
   color: var(--ink);
 }
 
+.site-shell {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.directory {
+  min-height: calc(100svh - 85px);
+  border-right: 1px solid var(--line);
+}
+
+.directory-inner {
+  position: sticky;
+  top: 86px;
+  max-height: calc(100svh - 86px);
+  overflow: auto;
+  padding: 28px 20px 48px;
+}
+
+.directory-label {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.directory-section + .directory-section {
+  margin-top: 24px;
+}
+
+.directory-section h2 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.directory-section ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.directory-section li + li {
+  margin-top: 2px;
+}
+
+.directory-section a {
+  display: block;
+  padding: 5px 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.32;
+  text-decoration: none;
+}
+
+.directory-section a:hover,
+.directory-section a.active {
+  color: var(--link);
+}
+
+.directory-section a.active {
+  font-weight: 800;
+}
+
 .note {
   max-width: 760px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   padding: 54px 22px 72px;
 }
 
@@ -132,7 +207,7 @@ pre code {
 }
 
 footer {
-  max-width: 900px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 24px 22px 34px;
   color: var(--muted);
@@ -150,11 +225,28 @@ footer p {
   }
 
   .site-header {
+    position: static;
     align-items: flex-start;
     flex-direction: column;
   }
 
   nav {
     justify-content: flex-start;
+  }
+
+  .site-shell {
+    display: block;
+  }
+
+  .directory {
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .directory-inner {
+    position: static;
+    max-height: 42svh;
+    padding: 20px 22px;
   }
 }
