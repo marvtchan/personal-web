@@ -1,0 +1,160 @@
+:root {
+  --bg: #fbfaf6;
+  --ink: #1b1f1d;
+  --muted: #646b67;
+  --line: #ded9cd;
+  --link: #0c665f;
+  --code: #efebe0;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 18px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.65;
+}
+
+a {
+  color: var(--link);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.site-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.site-title {
+  color: var(--ink);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: flex-end;
+}
+
+nav a {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--ink);
+}
+
+.note {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 54px 22px 72px;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+h1 {
+  margin: 0 0 26px;
+  font-size: clamp(2.4rem, 8vw, 4.8rem);
+}
+
+h2 {
+  margin: 56px 0 14px;
+  font-size: clamp(1.55rem, 4vw, 2.4rem);
+}
+
+h3 {
+  margin: 34px 0 10px;
+  font-size: 1.2rem;
+}
+
+p,
+ul,
+pre {
+  margin: 0 0 22px;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+li + li {
+  margin-top: 8px;
+}
+
+strong {
+  font-weight: 800;
+}
+
+code {
+  padding: 0.08em 0.32em;
+  border-radius: 4px;
+  background: var(--code);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.92em;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--code);
+}
+
+pre code {
+  padding: 0;
+  background: transparent;
+}
+
+footer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 22px 34px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+footer p {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 17px;
+  }
+
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  nav {
+    justify-content: flex-start;
+  }
+}

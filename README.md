@@ -1,14 +1,25 @@
-# Marvin Chan Portfolio
+# Marvin Chan Notes
 
-Static portfolio site for Marvin Chan.
+Minimal Obsidian-powered website for public notes, resume, and selected work.
+
+Edit Markdown in `content/`. Run the build script to generate static HTML in `dist/`.
 
 ## Local preview
 
 ```sh
+python3 scripts/build.py
+cd dist
 python3 -m http.server 4173
 ```
 
 Then open `http://localhost:4173`.
+
+## Content model
+
+- `content/index.md` is the homepage.
+- Any other `.md` file under `content/` becomes a page.
+- Frontmatter supports `title`, `description`, and `order`.
+- Obsidian wikilinks like `[[resume]]` and `[[notes/finance-control-plane|Finance control plane]]` are converted to site links.
 
 ## Deploy options
 
@@ -16,23 +27,20 @@ Then open `http://localhost:4173`.
 
 1. Create a new GitHub repo for this folder.
 2. Connect the repo in Cloudflare Pages.
-3. Build command: leave blank.
-4. Build output directory: `/`.
+3. Build command: `python3 scripts/build.py`.
+4. Build output directory: `dist`.
 5. Add the custom domain in Cloudflare Pages.
 6. In Squarespace DNS, point the desired host to the Pages target Cloudflare gives you.
 
 ### GitHub Pages
 
 1. Push this folder to a GitHub repo.
-2. Enable Pages from the repo settings.
-3. Use branch `main` and root `/`.
-4. Add the custom domain in GitHub Pages settings.
-5. Add the matching DNS records in Squarespace.
+2. Run `python3 scripts/build.py`.
+3. Configure GitHub Pages to publish from the `dist` folder via GitHub Actions, or use Cloudflare Pages for the simpler path.
 
 ## Content TODO
 
 - Replace placeholder contact links.
 - Add public project links.
 - Add a downloadable PDF resume.
-- Replace `notes.example.com` with the real notes subdomain.
-- Decide whether notes use Obsidian Publish or Quartz.
+- Add more public notes under `content/notes/`.
