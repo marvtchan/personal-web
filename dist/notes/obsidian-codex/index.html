@@ -17,12 +17,11 @@
         </button>
         <a class="site-title" href="/">Marvin Chan</a>
       </div>
-      <nav aria-label="Primary navigation">
-        <a href="/index.html">Home</a>
-<a href="/resume/index.html">Resume</a>
-<a href="/projects/index.html">Projects</a>
-<a href="/library/index.html">Library</a>
-      </nav>
+      <search class="site-search" role="search">
+        <label class="sr-only" for="site-search">Search notes</label>
+        <input id="site-search" type="search" placeholder="search notes..." autocomplete="off" data-search-input>
+        <div class="search-results" data-search-results hidden></div>
+      </search>
     </header>
     <div class="site-shell">
       <aside id="site-directory" class="directory" aria-label="Site directory">

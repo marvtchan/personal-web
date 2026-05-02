@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import html
+import json
 import re
 import shutil
 from dataclasses import dataclass
@@ -158,11 +159,6 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page]) -> str:
 
 
 def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -> str:
-    nav_pages = [item for item in pages if item.slug in {"", "resume", "projects", "library"}]
-    nav = "\n".join(
-        f'<a href="{relative_href(page_href(item.slug))}">{html.escape(item.title)}</a>'
-        for item in sorted(nav_pages, key=lambda p: (p.order, p.title.lower()))
-    )
     directory = render_directory(page, pages)
     content = markdown_to_html(page.body, pages_by_slug)
     description = html.escape(page.description)
@@ -187,9 +183,11 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
         </button>
         <a class="site-title" href="/">Marvin Chan</a>
       </div>
-      <nav aria-label="Primary navigation">
-        {nav}
-      </nav>
+      <search class="site-search" role="search">
+        <label class="sr-only" for="site-search">Search notes</label>
+        <input id="site-search" type="search" placeholder="search notes..." autocomplete="off" data-search-input>
+        <div class="search-results" data-search-results hidden></div>
+      </search>
     </header>
     <div class="site-shell">
       <aside id="site-directory" class="directory" aria-label="Site directory">
@@ -257,7 +255,39 @@ def build() -> None:
     if ASSETS.exists():
         shutil.copytree(ASSETS, DIST / "assets")
 
+    write_search_index(pages)
     print(f"Built {len(pages)} pages into {DIST}")
+
+
+def text_excerpt(markdown: str, limit: int = 180) -> str:
+    without_code = re.sub(r"```.*?```", "", markdown, flags=re.S)
+    without_frontmatter = re.sub(r"^---\n.*?\n---\n", "", without_code, flags=re.S)
+    wikilinks_resolved = re.sub(
+        r"\[\[([^|\]]+)\|([^\]]+)\]\]",
+        lambda match: match.group(2),
+        without_frontmatter,
+    )
+    wikilinks_resolved = re.sub(
+        r"\[\[([^\]]+)\]\]",
+        lambda match: match.group(1).split("/")[-1].replace("-", " "),
+        wikilinks_resolved,
+    )
+    plain = re.sub(r"[\[#*_`>\]-]+", " ", wikilinks_resolved)
+    plain = re.sub(r"\s+", " ", plain).strip()
+    return plain[:limit]
+
+
+def write_search_index(pages: list[Page]) -> None:
+    data = [
+        {
+            "title": page.title,
+            "description": page.description,
+            "url": relative_href(page_href(page.slug)),
+            "text": text_excerpt(page.body),
+        }
+        for page in pages
+    ]
+    (DIST / "search.json").write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 
 def make_library_page(pages: list[Page]) -> Page:

@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Home",
+    "description": "Public notes and resume for Marvin Chan.",
+    "url": "/index.html",
+    "text": "Marvin Chan Finance data and systems operator working at the intersection of analytics engineering, finance transformation, and practical AI workflows. This site is intentionally s"
+  },
+  {
+    "title": "Finance Control Plane",
+    "description": "A note on finance data, context, and AI workflow systems.",
+    "url": "/notes/finance-control-plane/index.html",
+    "text": "Finance Control Plane Modern finance teams need more than dashboards. They need a control plane that combines three layers: Quantitative truth: warehouse backed models, metrics, re"
+  },
+  {
+    "title": "Obsidian + Codex",
+    "description": "A note on using Obsidian and Codex as a personal operating system.",
+    "url": "/notes/obsidian-codex/index.html",
+    "text": "Obsidian + Codex Obsidian is the memory layer. Codex is the execution layer. The useful pattern is simple: Capture raw thoughts quickly. Let notes accumulate real context. Use Code"
+  },
+  {
+    "title": "Example Project Summary",
+    "description": "A placeholder project summary showing the publishing workflow.",
+    "url": "/project-summaries/example-project-summary/index.html",
+    "text": "Example Project Summary Drop public project writeups in content/project summaries/ . This can be a short narrative: what you built, why it mattered, what tools you used, and what y"
+  },
+  {
+    "title": "Projects",
+    "description": "Selected projects by Marvin Chan.",
+    "url": "/projects/index.html",
+    "text": "Projects Databricks / Plaid personal finance system A personal finance pipeline with Plaid ingestion, Databricks backed modeling, dashboards, and weekly review automation. The inte"
+  },
+  {
+    "title": "Resume",
+    "description": "Compact resume for Marvin Chan.",
+    "url": "/resume/index.html",
+    "text": "Resume Profile Finance data and systems leader focused on analytics engineering, reporting reliability, finance transformation, and AI enabled operating models. Current lane Financ"
+  },
+  {
+    "title": "Example Thought",
+    "description": "A placeholder thought showing how random notes publish.",
+    "url": "/thoughts/example-thought/index.html",
+    "text": "Example Thought Drop random public thoughts in content/thoughts/ . When you push to GitHub, the site rebuilds and this page appears in Library automatically."
+  },
+  {
+    "title": "Library",
+    "description": "All public notes, project summaries, thoughts, and pages.",
+    "url": "/library/index.html",
+    "text": "Library Everything public in this site, generated from Markdown files. Notes Finance Control Plane Obsidian + Codex Project Summaries Example Project Summary Projects Projects Resu"
+  }
+]
