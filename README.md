@@ -18,8 +18,25 @@ Then open `http://localhost:4173`.
 
 - `content/index.md` is the homepage.
 - Any other `.md` file under `content/` becomes a page.
+- `library/index.html` is generated automatically and lists every public page.
 - Frontmatter supports `title`, `description`, and `order`.
 - Obsidian wikilinks like `[[resume]]` and `[[notes/finance-control-plane|Finance control plane]]` are converted to site links.
+
+Suggested folders:
+
+- `content/notes/` for evergreen notes.
+- `content/thoughts/` for shorter public thoughts.
+- `content/project-summaries/` for project writeups.
+
+## Publish workflow
+
+```sh
+git add content
+git commit -m "Publish notes"
+git push
+```
+
+After pushing to GitHub, the included GitHub Pages workflow builds the site and deploys `dist/`.
 
 ## Deploy options
 
@@ -35,8 +52,8 @@ Then open `http://localhost:4173`.
 ### GitHub Pages
 
 1. Push this folder to a GitHub repo.
-2. Run `python3 scripts/build.py`.
-3. Configure GitHub Pages to publish from the `dist` folder via GitHub Actions, or use Cloudflare Pages for the simpler path.
+2. In the repository settings, enable Pages with source set to GitHub Actions.
+3. Push to `main`; `.github/workflows/pages.yml` builds and deploys the site.
 
 ## Content TODO
 

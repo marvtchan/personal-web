@@ -14,6 +14,7 @@ This site is intentionally small. It is a public layer for a few polished notes,
 
 - [[resume|Resume]]
 - [[projects|Projects]]
+- [[library|Library]]
 - [[notes/finance-control-plane|Finance control plane]]
 - [[notes/obsidian-codex|Obsidian + Codex]]
 

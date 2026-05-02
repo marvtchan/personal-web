@@ -158,9 +158,10 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page]) -> str:
 
 
 def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -> str:
+    nav_pages = [item for item in pages if item.slug in {"", "resume", "projects", "library"}]
     nav = "\n".join(
         f'<a href="{relative_href(page_href(item.slug))}">{html.escape(item.title)}</a>'
-        for item in sorted(pages, key=lambda p: (p.order, p.title.lower()))
+        for item in sorted(nav_pages, key=lambda p: (p.order, p.title.lower()))
     )
     content = markdown_to_html(page.body, pages_by_slug)
     description = html.escape(page.description)
@@ -199,6 +200,7 @@ def build() -> None:
     DIST.mkdir(parents=True)
 
     pages = [parse_note(path) for path in sorted(CONTENT.rglob("*.md"))]
+    pages.append(make_library_page(pages))
     pages_by_slug = {page.slug: page for page in pages}
 
     for page in pages:
@@ -210,6 +212,39 @@ def build() -> None:
         shutil.copytree(ASSETS, DIST / "assets")
 
     print(f"Built {len(pages)} pages into {DIST}")
+
+
+def make_library_page(pages: list[Page]) -> Page:
+    grouped: dict[str, list[Page]] = {}
+    for page in pages:
+        if page.slug == "":
+            continue
+        section = page.slug.split("/", 1)[0]
+        grouped.setdefault(section, []).append(page)
+
+    lines = [
+        "# Library",
+        "",
+        "Everything public in this site, generated from Markdown files.",
+        "",
+    ]
+
+    for section in sorted(grouped):
+        heading = section.replace("-", " ").title()
+        lines.extend([f"## {heading}", ""])
+        for page in sorted(grouped[section], key=lambda p: (p.order, p.title.lower())):
+            target = page.slug
+            lines.append(f"- [[{target}|{page.title}]]")
+        lines.append("")
+
+    return Page(
+        source=CONTENT / "library.md",
+        slug="library",
+        title="Library",
+        description="All public notes, project summaries, thoughts, and pages.",
+        order=4,
+        body="\n".join(lines).strip(),
+    )
 
 
 if __name__ == "__main__":
