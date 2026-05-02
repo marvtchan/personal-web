@@ -1,13 +1,12 @@
 :root {
-  --bg: #0f1110;
-  --panel: #141715;
-  --ink: #d7ded4;
-  --muted: #7f8a82;
-  --line: #2a302b;
-  --link: #9cdcfe;
-  --accent: #b5cea8;
-  --code: #1d211e;
-  color-scheme: dark;
+  --bg: #ffffff;
+  --panel: #ffffff;
+  --ink: #111111;
+  --muted: #666666;
+  --line: #dddddd;
+  --link: #111111;
+  --code: #f6f6f6;
+  color-scheme: light;
 }
 
 * {
@@ -15,25 +14,26 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 17px;
 }
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  line-height: 1.65;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  line-height: 1.68;
 }
 
 a {
   color: var(--link);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.18em;
 }
 
 a:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.22em;
+  color: var(--muted);
 }
 
 .sr-only {
@@ -56,27 +56,25 @@ a:hover {
   justify-content: space-between;
   gap: 18px;
   width: 100%;
-  padding: 12px 16px;
-  background: rgba(15, 17, 16, 0.96);
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid var(--line);
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   min-width: 0;
 }
 
 .site-title {
   color: var(--ink);
-  font-weight: 700;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 650;
+  text-decoration: none;
   white-space: nowrap;
-}
-
-.site-title::before {
-  content: "~ ";
-  color: var(--accent);
 }
 
 .sidebar-toggle {
@@ -91,12 +89,13 @@ a:hover {
   color: var(--muted);
   cursor: pointer;
   font: inherit;
-  font-size: 0.82rem;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.78rem;
 }
 
 .sidebar-toggle:hover {
   color: var(--ink);
-  border-color: var(--muted);
+  border-color: var(--ink);
 }
 
 .site-search {
@@ -107,18 +106,19 @@ a:hover {
 .site-search input {
   width: 100%;
   min-height: 34px;
-  padding: 0 11px;
+  padding: 0 10px;
   border: 1px solid var(--line);
   border-radius: 0;
-  background: #090b0a;
+  background: var(--panel);
   color: var(--ink);
   font: inherit;
-  font-size: 0.88rem;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.84rem;
   outline: none;
 }
 
 .site-search input:focus {
-  border-color: var(--accent);
+  border-color: var(--ink);
 }
 
 .site-search input::placeholder {
@@ -133,8 +133,8 @@ a:hover {
   max-height: 60svh;
   overflow: auto;
   border: 1px solid var(--line);
-  background: #090b0a;
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  background: var(--panel);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.08);
 }
 
 .search-result {
@@ -142,6 +142,8 @@ a:hover {
   padding: 10px 12px;
   border-bottom: 1px solid var(--line);
   color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-decoration: none;
 }
 
 .search-result:last-child {
@@ -150,7 +152,6 @@ a:hover {
 
 .search-result span {
   display: block;
-  color: var(--link);
 }
 
 .search-result small,
@@ -168,7 +169,7 @@ a:hover {
 .site-shell {
   display: grid;
   grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
-  max-width: 1220px;
+  max-width: 1180px;
   margin: 0 auto;
 }
 
@@ -185,33 +186,31 @@ body.sidebar-hidden .note {
 }
 
 .directory {
-  min-height: calc(100svh - 59px);
+  min-height: calc(100svh - 63px);
   border-right: 1px solid var(--line);
-  background: rgba(20, 23, 21, 0.42);
 }
 
 .directory-inner {
   position: sticky;
-  top: 59px;
-  max-height: calc(100svh - 59px);
+  top: 63px;
+  max-height: calc(100svh - 63px);
   overflow: auto;
-  padding: 16px 14px 40px;
+  padding: 18px 18px 42px;
 }
 
 .directory-label {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   color: var(--muted);
-  font-size: 0.74rem;
-}
-
-.directory-label::before {
-  content: "$ ";
-  color: var(--accent);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .directory-section {
   border-top: 1px solid var(--line);
-  padding: 6px 0;
+  padding: 8px 0;
 }
 
 .directory-section:last-child {
@@ -222,11 +221,12 @@ body.sidebar-hidden .note {
   display: flex;
   align-items: center;
   gap: 7px;
-  color: var(--muted);
+  color: var(--ink);
   cursor: pointer;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: lowercase;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 650;
+  text-transform: uppercase;
   user-select: none;
 }
 
@@ -235,93 +235,78 @@ body.sidebar-hidden .note {
 }
 
 .directory-section summary::before {
-  content: "+";
-  color: var(--accent);
+  content: "▸";
+  color: var(--muted);
+  font-size: 0.68rem;
   width: 1ch;
 }
 
 .directory-section[open] summary::before {
-  content: "-";
+  content: "▾";
 }
 
 .directory-section ol {
-  margin: 6px 0 0;
+  margin: 8px 0 0;
   padding: 0;
   list-style: none;
 }
 
 .directory-section li + li {
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 .directory-section a {
   display: block;
-  padding: 3px 0 3px 18px;
+  padding: 4px 0 4px 18px;
   color: var(--muted);
-  font-size: 0.86rem;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.84rem;
   line-height: 1.35;
-}
-
-.directory-section a::before {
-  content: "└ ";
-  color: #4d5750;
+  text-decoration: none;
 }
 
 .directory-section a:hover,
 .directory-section a.active {
   color: var(--ink);
-  text-decoration: none;
 }
 
 .directory-section a.active {
-  color: var(--accent);
+  font-weight: 650;
 }
 
 .note {
-  max-width: 790px;
+  max-width: 740px;
   width: 100%;
   margin: 0;
-  padding: 42px 24px 72px;
+  padding: 48px 28px 76px;
 }
 
 h1,
 h2,
 h3 {
-  line-height: 1.16;
+  color: var(--ink);
+  line-height: 1.2;
   letter-spacing: 0;
 }
 
 h1 {
-  margin: 0 0 24px;
-  color: var(--ink);
-  font-size: clamp(2rem, 6vw, 3.8rem);
-}
-
-h1::before {
-  content: "# ";
-  color: var(--accent);
+  margin: 0 0 28px;
+  font-size: clamp(2.1rem, 6vw, 3.6rem);
+  font-weight: 700;
 }
 
 h2 {
-  margin: 44px 0 12px;
-  color: var(--ink);
+  margin: 44px 0 14px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
   font-size: clamp(1.35rem, 3vw, 2rem);
-}
-
-h2::before {
-  content: "## ";
-  color: var(--accent);
+  font-weight: 700;
 }
 
 h3 {
-  margin: 28px 0 10px;
-  color: var(--ink);
-  font-size: 1.05rem;
-}
-
-h3::before {
-  content: "### ";
-  color: var(--accent);
+  margin: 30px 0 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 p,
@@ -332,11 +317,11 @@ pre {
 
 p,
 li {
-  color: #c1c9c0;
+  color: var(--ink);
 }
 
 ul {
-  padding-left: 1.25rem;
+  padding-left: 1.3rem;
 }
 
 li + li {
@@ -344,16 +329,16 @@ li + li {
 }
 
 strong {
-  color: var(--ink);
-  font-weight: 800;
+  font-weight: 700;
 }
 
 code {
   padding: 0.08em 0.28em;
+  border: 1px solid #e7e7e7;
   background: var(--code);
-  color: #dcdcaa;
-  font-family: inherit;
-  font-size: 0.94em;
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.9em;
 }
 
 pre {
@@ -365,25 +350,22 @@ pre {
 
 pre code {
   padding: 0;
+  border: 0;
   background: transparent;
 }
 
 footer {
-  max-width: 1220px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 18px 16px 28px;
+  padding: 18px 20px 30px;
   color: var(--muted);
   border-top: 1px solid var(--line);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 0.82rem;
 }
 
 footer p {
   margin: 0;
-}
-
-footer p::before {
-  content: "> ";
-  color: var(--accent);
 }
 
 @media (max-width: 720px) {
@@ -424,10 +406,10 @@ footer p::before {
   .directory-inner {
     position: static;
     max-height: 42svh;
-    padding: 14px 16px;
+    padding: 16px 20px;
   }
 
   .note {
-    padding: 34px 16px 60px;
+    padding: 40px 20px 64px;
   }
 }
