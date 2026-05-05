@@ -235,14 +235,15 @@ body.sidebar-hidden .note {
 }
 
 .directory-section summary::before {
-  content: "▸";
+  content: "+";
   color: var(--muted);
-  font-size: 0.68rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.76rem;
   width: 1ch;
 }
 
 .directory-section[open] summary::before {
-  content: "▾";
+  content: "-";
 }
 
 .directory-section ol {
@@ -257,12 +258,18 @@ body.sidebar-hidden .note {
 
 .directory-section a {
   display: block;
-  padding: 4px 0 4px 18px;
+  padding: 4px 0 4px 20px;
   color: var(--muted);
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 0.84rem;
   line-height: 1.35;
   text-decoration: none;
+}
+
+.directory-section a::before {
+  content: "└ ";
+  color: #999999;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
 .directory-section a:hover,
