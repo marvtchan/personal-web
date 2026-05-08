@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content"
 DIST = ROOT / "dist"
 ASSETS = ROOT / "assets"
+CONTENT_ASSETS = CONTENT / "assets"
 
 
 @dataclass
@@ -88,17 +89,34 @@ def relative_href(path: str) -> str:
 def inline_markup(text: str, pages_by_slug: dict[str, Page]) -> str:
     escaped = html.escape(text)
 
+    def replace_image(match: re.Match[str]) -> str:
+        alt = html.escape(match.group(1))
+        src = html.escape(asset_path(match.group(2)))
+        return f'<img src="{src}" alt="{alt}">'
+
     def replace_wikilink(match: re.Match[str]) -> str:
         target = match.group(1)
         label = match.group(2) or target.split("/")[-1].replace("-", " ")
         href = link_target(target, pages_by_slug)
         return f'<a href="{href}">{html.escape(label)}</a>'
 
+    escaped = re.sub(r"!\[([^\]]*)\]\(([^)]+)\)", replace_image, escaped)
     escaped = re.sub(r"\[\[([^|\]]+)(?:\|([^\]]+))?\]\]", replace_wikilink, escaped)
     escaped = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', escaped)
     escaped = re.sub(r"`([^`]+)`", r"<code>\1</code>", escaped)
     escaped = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", escaped)
     return escaped
+
+
+def asset_path(raw: str) -> str:
+    path = raw.strip()
+    if re.match(r"^[a-z][a-z0-9+.-]*://", path, flags=re.I) or path.startswith("/"):
+        return path
+    if path.startswith("content/assets/"):
+        return "/" + path.removeprefix("content/")
+    if path.startswith("assets/"):
+        return "/" + path
+    return path
 
 
 def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page]) -> str:
@@ -278,6 +296,8 @@ def build() -> None:
 
     if ASSETS.exists():
         shutil.copytree(ASSETS, DIST / "assets")
+    if CONTENT_ASSETS.exists():
+        shutil.copytree(CONTENT_ASSETS, DIST / "assets", dirs_exist_ok=True)
 
     write_search_index(pages)
     print(f"Built {len(pages)} pages into {DIST}")

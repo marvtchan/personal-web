@@ -21,11 +21,21 @@ Then open `http://localhost:4173`.
 - Frontmatter supports `title`, `description`, and `order`.
 - Frontmatter also supports `created` and `updated`, which render above the page content.
 - Obsidian wikilinks like `[[resume]]` and `[[blog/finance-control-plane|Finance control plane]]` are converted to site links.
+- Images in `content/assets/` are copied to `/assets/` during build.
 
 Suggested folders:
 
 - `content/blog/` for blog posts / public notes.
+- `content/assets/` for public images.
 - `content/` root pages for Home, Project, and Resume.
+
+Image example:
+
+```md
+![Alt text](content/assets/example.jpg)
+```
+
+The built site serves that image from `/assets/example.jpg`.
 
 ## Publish workflow
 

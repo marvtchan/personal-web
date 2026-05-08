@@ -10,7 +10,11 @@ updated: 2026-05-04 19:36
 ## Premise
 Ryland Grace is a school teacher who is also a genius biologist who came up with a paper about extra terrestrial beings who may potentially be made up of things outside of water. He was mocked and exiled for his belief in non-water-based life forms but recruited by the government to check out the **Astrophages** (alien organisms that were taking the sun’s energy). He eventually figures out that the life forms are indeed water based but they collectively reach Venus to breed. Venus has a chemical makeup that makes them multiply (carbon dioxide) This discovery leads him into the top secret branch of this government project and gets him a spot with the top secret team to discover why a star (**Tau Ceti**) in a neighboring star system has shown weak signs of the Astrophages whereas their trail is bright everywhere else. This leads them to form a mission called Project Hail Mary where they must discover the reason for the Astrophages faintness at this star and see if they can discover the solution to stop the Astrophages from eating up the sun’s energy. 
 
+![Tau Ceti Map](content/assets/project-hail-mary-star-map-tau-ceti.jpeg)
+
 As they prepare for this mission, they begin breeding Astrophages as an energy source for their space ship, this space ship will be manned by 3 of the team members who are willing to sacrifice their lives for the potential savior of mankind. An explosion caused by an Astrophage accident ends up killing an important scientist who was bound to be on the mission which leads Ryland as the backup scientist for the trip. He is chosen for his expert knowledge in Astrophages but he does not want to go. This leads to an altercation where he is forcibly drugged into an induced coma and brought on to the mission. The movie actually starts with him waking on the ship with amnesia. He eventually remembers everything as the movie progresses but he realizes he’s the only one who survived the interstellar trip. 
+
+![Rocky Ship](content/assets/project-hail-mary-star-ship-rocky-space.jpeg)
 
 When he nears Tau Ceti, he notices another ship. This is where he meets Rocky, another life form except his species is ammonia-based. He's a cute spider like, rocky, intelligent life form. He also was the sole survivor on his ship. They build a bond from their shared mission of saving their planets. Rocky is from the planet Erid, in the **40 Eridani star system**, in the movie they explain that the atmosphere from each other's planets would destroy each other. This becomes an issue for them when they try to work together but they build around it. Eridians are incredibly talented at building. They can build solid structures designed for high-pressure, ammonia-rich atmosphere. The material they use is called **xenonite**. From ChatGPT:
 	- Humans build around **water/oxygen/low pressure**.
@@ -19,6 +23,8 @@ When he nears Tau Ceti, he notices another ship. This is where he meets Rocky, a
 	- Eridians use **sound, vibration, texture, and material geometry**.
 
 With their team work they discover the reason why Astrophages were dying out around **Tau Ceti**. There were living organisms eating the Astrophages. These were described as natural predators named **Taumoeba**. With this discovery they were able to create a hatching system on the ship and get ready for their flights home. At the very end Ryland discovers that the organisms leaked through the hatch system and began eating through the Astrophage fuel storage. He realizes that this is probably happening to Rocky's ship as well (Rocky has no way of figuring this out on his own, his senses are similar to echolocation not vision. He would not be able to figure out what is going on or why before it is too late) so he makes the decision to abandon his trip home and backtrack to save Rocky. 
+
+![Supernova Glow](content/assets/project-hail-mary-star-ship-red-supernova-glow.jpg)
 
 The movie ends with both planets saved. Earth receives the Taumoeba samples with the new micro-ogranisms from **Tau Ceti** and begins a plan to breed them and use them to destroy the Astrophages. Ryland and Rocky are back on Erid. They form a bubble atmosphere for Ryland to live in, it is a beach-like environment where he has access to a home, sand, water, and he also is shown as a teacher, teaching the Eridians human scientific knowledge, including radiation, things the Eridians have not learned on their own. In the end Rocky asks Ryland if he's ready to go home, Ryland responds that he needs some time to think about it, Rocky says take your time.
 
@@ -37,5 +43,3 @@ Because ai is so efficient, the abundance in knowledge and automation will chang
 
 
 
-## Links
-- 
