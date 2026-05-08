@@ -18,15 +18,14 @@ Then open `http://localhost:4173`.
 
 - `content/index.md` is the homepage.
 - Any other `.md` file under `content/` becomes a page.
-- `library/index.html` is generated automatically and lists every public page.
 - Frontmatter supports `title`, `description`, and `order`.
-- Obsidian wikilinks like `[[resume]]` and `[[notes/finance-control-plane|Finance control plane]]` are converted to site links.
+- Frontmatter also supports `created` and `updated`, which render above the page content.
+- Obsidian wikilinks like `[[resume]]` and `[[blog/finance-control-plane|Finance control plane]]` are converted to site links.
 
 Suggested folders:
 
-- `content/notes/` for evergreen notes.
-- `content/thoughts/` for shorter public thoughts.
-- `content/project-summaries/` for project writeups.
+- `content/blog/` for blog posts / public notes.
+- `content/` root pages for Home, Project, and Resume.
 
 ## Publish workflow
 
@@ -60,4 +59,4 @@ After pushing to GitHub, the included GitHub Pages workflow builds the site and 
 - Replace placeholder contact links.
 - Add public project links.
 - Add a downloadable PDF resume.
-- Add more public notes under `content/notes/`.
+- Add more public notes under `content/blog/`.

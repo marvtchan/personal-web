@@ -281,6 +281,15 @@ body.sidebar-hidden .note {
   padding: 48px 28px 76px;
 }
 
+.page-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
 h1,
 h2,
 h3 {

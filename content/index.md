@@ -8,16 +8,7 @@ order: 1
 
 Finance data and systems operator working at the intersection of analytics engineering, finance transformation, and practical AI workflows.
 
-This site is intentionally small. It is a public layer for a few polished notes, a compact resume, and selected projects.
+This site is a collection of markdown files from my Obsidian Vault. The purpose of this site is to share my thoughts on current events, movies, career, and things that I am passionate about.
 
 ## Start here
-
-- [[resume|Resume]]
-- [[projects|Projects]]
-- [[library|Library]]
-- [[notes/finance-control-plane|Finance control plane]]
-- [[notes/obsidian-codex|Obsidian + Codex]]
-
-## Current lane
-
-I like systems-heavy finance/data work where the job is to convert ambiguity into useful operating infrastructure: data models, dashboards, workflows, controls, and clear decision surfaces.
+- [[blog/stripe-sessions-reflection|Stripe Sessions reflection]]

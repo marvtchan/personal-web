@@ -22,6 +22,8 @@ class Page:
     title: str
     description: str
     order: int
+    created: str
+    updated: str
     body: str
 
 
@@ -47,6 +49,8 @@ def parse_note(path: Path) -> Page:
     fallback_title = path.stem.replace("-", " ").title()
     title = meta.get("title", fallback_title)
     description = meta.get("description", "")
+    created = meta.get("created", "")
+    updated = meta.get("updated", "")
     try:
         order = int(meta.get("order", "100"))
     except ValueError:
@@ -58,6 +62,8 @@ def parse_note(path: Path) -> Page:
         title=title,
         description=description,
         order=order,
+        created=created,
+        updated=updated,
         body=body.strip(),
     )
 
@@ -163,6 +169,7 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
     content = markdown_to_html(page.body, pages_by_slug)
     description = html.escape(page.description)
     title = html.escape(page.title)
+    metadata = render_page_metadata(page)
 
     return f"""<!doctype html>
 <html lang="en">
@@ -197,6 +204,7 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
         </div>
       </aside>
       <main class="note">
+        {metadata}
         {content}
       </main>
     </div>
@@ -208,19 +216,36 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
 """
 
 
+def render_page_metadata(page: Page) -> str:
+    items = []
+    if page.created:
+        items.append(f"<span>Created {html.escape(page.created)}</span>")
+    if page.updated:
+        items.append(f"<span>Updated {html.escape(page.updated)}</span>")
+    if not items:
+        return ""
+    return f'<div class="page-meta">{"".join(items)}</div>'
+
+
 def render_directory(current_page: Page, pages: list[Page]) -> str:
     grouped: dict[str, list[Page]] = {}
     for page in pages:
         section = "home" if page.slug == "" else page.slug.split("/", 1)[0]
         grouped.setdefault(section, []).append(page)
 
-    preferred = ["home", "resume", "projects", "library", "notes", "project-summaries", "thoughts"]
+    preferred = ["home", "blog", "projects", "resume"]
+    section_labels = {
+        "home": "Home",
+        "blog": "Blog",
+        "projects": "Project",
+        "resume": "Resume",
+    }
     ordered_sections = [section for section in preferred if section in grouped]
     ordered_sections.extend(section for section in sorted(grouped) if section not in preferred)
 
     parts: list[str] = []
     for section in ordered_sections:
-        heading = section.replace("-", " ").title()
+        heading = section_labels.get(section, section.replace("-", " ").title())
         section_open = " open" if any(page.slug == current_page.slug for page in grouped[section]) else ""
         parts.append(
             f'<details class="directory-section"{section_open}>'
@@ -244,7 +269,6 @@ def build() -> None:
     DIST.mkdir(parents=True)
 
     pages = [parse_note(path) for path in sorted(CONTENT.rglob("*.md"))]
-    pages.append(make_library_page(pages))
     pages_by_slug = {page.slug: page for page in pages}
 
     for page in pages:
@@ -288,39 +312,6 @@ def write_search_index(pages: list[Page]) -> None:
         for page in pages
     ]
     (DIST / "search.json").write_text(json.dumps(data, indent=2), encoding="utf-8")
-
-
-def make_library_page(pages: list[Page]) -> Page:
-    grouped: dict[str, list[Page]] = {}
-    for page in pages:
-        if page.slug == "":
-            continue
-        section = page.slug.split("/", 1)[0]
-        grouped.setdefault(section, []).append(page)
-
-    lines = [
-        "# Library",
-        "",
-        "Everything public in this site, generated from Markdown files.",
-        "",
-    ]
-
-    for section in sorted(grouped):
-        heading = section.replace("-", " ").title()
-        lines.extend([f"## {heading}", ""])
-        for page in sorted(grouped[section], key=lambda p: (p.order, p.title.lower())):
-            target = page.slug
-            lines.append(f"- [[{target}|{page.title}]]")
-        lines.append("")
-
-    return Page(
-        source=CONTENT / "library.md",
-        slug="library",
-        title="Library",
-        description="All public notes, project summaries, thoughts, and pages.",
-        order=4,
-        body="\n".join(lines).strip(),
-    )
 
 
 if __name__ == "__main__":
