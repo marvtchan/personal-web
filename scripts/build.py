@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import html
 import json
+import posixpath
 import re
 import shutil
 from dataclasses import dataclass
@@ -73,31 +74,33 @@ def page_href(slug: str) -> str:
     return "index.html" if slug == "" else f"{slug}/index.html"
 
 
-def link_target(raw: str, pages_by_slug: dict[str, Page]) -> str:
+def link_target(raw: str, pages_by_slug: dict[str, Page], current_slug: str) -> str:
     normalized = raw.strip().strip("/")
     candidates = [normalized, normalized.replace(" ", "-").lower()]
     for candidate in candidates:
         if candidate in pages_by_slug:
-            return relative_href(page_href(candidate))
+            return relative_href(page_href(candidate), current_slug)
     return "#"
 
 
-def relative_href(path: str) -> str:
-    return "/" + path
+def relative_href(path: str, current_slug: str) -> str:
+    target = path.lstrip("/")
+    current_dir = posixpath.dirname(page_href(current_slug)) or "."
+    return posixpath.relpath(target, start=current_dir)
 
 
-def inline_markup(text: str, pages_by_slug: dict[str, Page]) -> str:
+def inline_markup(text: str, pages_by_slug: dict[str, Page], current_slug: str) -> str:
     escaped = html.escape(text)
 
     def replace_image(match: re.Match[str]) -> str:
         alt = html.escape(match.group(1))
-        src = html.escape(asset_path(match.group(2)))
+        src = html.escape(asset_path(match.group(2), current_slug))
         return f'<img src="{src}" alt="{alt}">'
 
     def replace_wikilink(match: re.Match[str]) -> str:
         target = match.group(1)
         label = match.group(2) or target.split("/")[-1].replace("-", " ")
-        href = link_target(target, pages_by_slug)
+        href = link_target(target, pages_by_slug, current_slug)
         return f'<a href="{href}">{html.escape(label)}</a>'
 
     escaped = re.sub(r"!\[([^\]]*)\]\(([^)]+)\)", replace_image, escaped)
@@ -108,18 +111,20 @@ def inline_markup(text: str, pages_by_slug: dict[str, Page]) -> str:
     return escaped
 
 
-def asset_path(raw: str) -> str:
+def asset_path(raw: str, current_slug: str) -> str:
     path = raw.strip()
-    if re.match(r"^[a-z][a-z0-9+.-]*://", path, flags=re.I) or path.startswith("/"):
+    if re.match(r"^[a-z][a-z0-9+.-]*://", path, flags=re.I):
         return path
     if path.startswith("content/assets/"):
-        return "/" + path.removeprefix("content/")
+        return relative_href(path.removeprefix("content/"), current_slug)
     if path.startswith("assets/"):
-        return "/" + path
+        return relative_href(path, current_slug)
+    if path.startswith("/"):
+        return relative_href(path, current_slug)
     return path
 
 
-def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page]) -> str:
+def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug: str) -> str:
     blocks: list[str] = []
     paragraph: list[str] = []
     list_items: list[str] = []
@@ -129,12 +134,12 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page]) -> str:
     def flush_paragraph() -> None:
         if paragraph:
             text = " ".join(line.strip() for line in paragraph)
-            blocks.append(f"<p>{inline_markup(text, pages_by_slug)}</p>")
+            blocks.append(f"<p>{inline_markup(text, pages_by_slug, current_slug)}</p>")
             paragraph.clear()
 
     def flush_list() -> None:
         if list_items:
-            items = "".join(f"<li>{inline_markup(item, pages_by_slug)}</li>" for item in list_items)
+            items = "".join(f"<li>{inline_markup(item, pages_by_slug, current_slug)}</li>" for item in list_items)
             blocks.append(f"<ul>{items}</ul>")
             list_items.clear()
 
@@ -166,7 +171,7 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page]) -> str:
             flush_paragraph()
             flush_list()
             level = len(heading.group(1))
-            blocks.append(f"<h{level}>{inline_markup(heading.group(2), pages_by_slug)}</h{level}>")
+            blocks.append(f"<h{level}>{inline_markup(heading.group(2), pages_by_slug, current_slug)}</h{level}>")
             continue
 
         bullet = re.match(r"^-+\s+(.+)$", stripped)
@@ -184,7 +189,7 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page]) -> str:
 
 def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -> str:
     directory = render_directory(page, pages)
-    content = markdown_to_html(page.body, pages_by_slug)
+    content = markdown_to_html(page.body, pages_by_slug, page.slug)
     description = html.escape(page.description)
     title = html.escape(page.title)
     metadata = render_page_metadata(page)
@@ -196,8 +201,8 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{description}">
     <title>{title} | Marvin Chan</title>
-    <link rel="stylesheet" href="/assets/styles.css">
-    <script src="/assets/site.js" defer></script>
+    <link rel="stylesheet" href="{relative_href("assets/styles.css", page.slug)}">
+    <script src="{relative_href("assets/site.js", page.slug)}" defer></script>
   </head>
   <body>
     <header class="site-header">
@@ -206,7 +211,7 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
           <span aria-hidden="true">☰</span>
           <span>Directory</span>
         </button>
-        <a class="site-title" href="/">Marvin Chan</a>
+        <a class="site-title" href="{relative_href(page_href(""), page.slug)}">Marvin Chan</a>
       </div>
       <search class="site-search" role="search">
         <label class="sr-only" for="site-search">Search notes</label>
@@ -272,7 +277,7 @@ def render_directory(current_page: Page, pages: list[Page]) -> str:
         for page in sorted(grouped[section], key=lambda p: (p.order, p.title.lower())):
             active = ' aria-current="page"' if page.slug == current_page.slug else ""
             class_name = ' class="active"' if page.slug == current_page.slug else ""
-            href = relative_href(page_href(page.slug))
+            href = relative_href(page_href(page.slug), current_page.slug)
             parts.append(
                 f'<li><a{class_name}{active} href="{href}">{html.escape(page.title)}</a></li>'
             )
@@ -326,7 +331,7 @@ def write_search_index(pages: list[Page]) -> None:
         {
             "title": page.title,
             "description": page.description,
-            "url": relative_href(page_href(page.slug)),
+            "url": page_href(page.slug),
             "text": text_excerpt(page.body),
         }
         for page in pages

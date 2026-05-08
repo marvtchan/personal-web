@@ -3,6 +3,8 @@ const directory = document.querySelector('#site-directory');
 const hiddenClass = 'sidebar-hidden';
 const searchInput = document.querySelector('[data-search-input]');
 const searchResults = document.querySelector('[data-search-results]');
+const siteScript = document.currentScript || document.querySelector('script[src$="site.js"]');
+const siteRoot = siteScript ? new URL('..', siteScript.src) : new URL('/', window.location.href);
 let searchIndex = [];
 
 function setSidebarHidden(hidden) {
@@ -39,9 +41,13 @@ document.querySelectorAll('.directory-section').forEach((section) => {
 
 async function loadSearchIndex() {
   if (searchIndex.length) return searchIndex;
-  const response = await fetch('/search.json');
+  const response = await fetch(new URL('search.json', siteRoot));
   searchIndex = await response.json();
   return searchIndex;
+}
+
+function siteHref(path) {
+  return new URL(path.replace(/^\//, ''), siteRoot).pathname;
 }
 
 function scorePage(page, query) {
@@ -68,7 +74,7 @@ function renderSearchResults(results) {
   searchResults.innerHTML = results
     .slice(0, 8)
     .map((page) => `
-      <a class="search-result" href="${page.url}">
+      <a class="search-result" href="${siteHref(page.url)}">
         <span>${page.title}</span>
         <small>${page.description || page.text || page.url}</small>
       </a>
