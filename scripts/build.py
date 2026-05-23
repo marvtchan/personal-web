@@ -223,7 +223,10 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
         <label class="theme-switch" for="theme-toggle">
           <span class="sr-only">Dark mode</span>
           <input id="theme-toggle" type="checkbox" data-theme-toggle>
-          <span class="theme-slider" aria-hidden="true"></span>
+          <span class="theme-slider" aria-hidden="true">
+            <span>Light</span>
+            <span>Dark</span>
+          </span>
         </label>
       </div>
     </header>
