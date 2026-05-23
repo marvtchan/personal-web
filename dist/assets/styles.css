@@ -6,7 +6,22 @@
   --line: #dddddd;
   --link: #111111;
   --code: #f6f6f6;
+  --header-bg: rgba(255, 255, 255, 0.96);
+  --shadow: rgba(0, 0, 0, 0.08);
   color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #101010;
+  --panel: #171717;
+  --ink: #eeeeee;
+  --muted: #a2a2a2;
+  --line: #303030;
+  --link: #eeeeee;
+  --code: #1e1e1e;
+  --header-bg: rgba(16, 16, 16, 0.96);
+  --shadow: rgba(0, 0, 0, 0.36);
+  color-scheme: dark;
 }
 
 * {
@@ -57,7 +72,7 @@ a:hover {
   gap: 18px;
   width: 100%;
   padding: 14px 20px;
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--header-bg);
   border-bottom: 1px solid var(--line);
 }
 
@@ -96,6 +111,14 @@ a:hover {
   border-color: var(--ink);
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  min-width: 0;
+}
+
 .site-search {
   position: relative;
   width: min(360px, 46vw);
@@ -131,7 +154,7 @@ a:hover {
   overflow: auto;
   border: 1px solid var(--line);
   background: var(--panel);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 18px 44px var(--shadow);
 }
 
 .search-result {
@@ -160,6 +183,59 @@ a:hover {
 
 .search-empty {
   padding: 12px;
+}
+
+.theme-switch {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.theme-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.theme-slider {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.theme-slider::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 14px;
+  height: 14px;
+  background: var(--ink);
+  transition: transform 160ms ease;
+}
+
+.theme-slider::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--muted);
+  border-radius: 50%;
+}
+
+.theme-switch input:checked + .theme-slider::before {
+  transform: translateX(20px);
+}
+
+.theme-switch input:focus-visible + .theme-slider {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
 }
 
 .site-shell {
@@ -350,7 +426,7 @@ strong {
 
 code {
   padding: 0.08em 0.28em;
-  border: 1px solid #e7e7e7;
+  border: 1px solid var(--line);
   background: var(--code);
   color: var(--ink);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -394,8 +470,13 @@ footer p {
     justify-content: space-between;
   }
 
+  .header-right,
   .site-search {
     width: 100%;
+  }
+
+  .theme-switch {
+    align-self: flex-end;
   }
 
   .search-results {

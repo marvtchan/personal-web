@@ -3,9 +3,30 @@ const directory = document.querySelector('#site-directory');
 const hiddenClass = 'sidebar-hidden';
 const searchInput = document.querySelector('[data-search-input]');
 const searchResults = document.querySelector('[data-search-results]');
+const themeToggle = document.querySelector('[data-theme-toggle]');
 const siteScript = document.currentScript || document.querySelector('script[src$="site.js"]');
 const siteRoot = siteScript ? new URL('..', siteScript.src) : new URL('/', window.location.href);
 let searchIndex = [];
+
+function setTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  localStorage.setItem('theme', theme);
+  if (themeToggle) {
+    themeToggle.checked = theme === 'dark';
+  }
+}
+
+function preferredTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light' || saved === 'dark') return saved;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+setTheme(preferredTheme());
+
+themeToggle?.addEventListener('change', () => {
+  setTheme(themeToggle.checked ? 'dark' : 'light');
+});
 
 function setSidebarHidden(hidden) {
   document.body.classList.toggle(hiddenClass, hidden);

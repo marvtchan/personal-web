@@ -214,11 +214,18 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
         </button>
         <a class="site-title" href="{relative_href(page_href(""), page.slug)}">Marvin Chan</a>
       </div>
-      <search class="site-search" role="search">
-        <label class="sr-only" for="site-search">Search notes</label>
-        <input id="site-search" type="search" placeholder="search notes..." autocomplete="off" data-search-input>
-        <div class="search-results" data-search-results hidden></div>
-      </search>
+      <div class="header-right">
+        <search class="site-search" role="search">
+          <label class="sr-only" for="site-search">Search notes</label>
+          <input id="site-search" type="search" placeholder="search notes..." autocomplete="off" data-search-input>
+          <div class="search-results" data-search-results hidden></div>
+        </search>
+        <label class="theme-switch" for="theme-toggle">
+          <span class="sr-only">Dark mode</span>
+          <input id="theme-toggle" type="checkbox" data-theme-toggle>
+          <span class="theme-slider" aria-hidden="true"></span>
+        </label>
+      </div>
     </header>
     <div class="site-shell">
       <aside id="site-directory" class="directory" aria-label="Site directory">
