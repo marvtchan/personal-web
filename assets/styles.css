@@ -390,12 +390,10 @@ body.sidebar-hidden .note {
 }
 
 .latest-post {
-  margin: 42px 0 0;
-  padding: 20px 0 0;
-  border-top: 1px solid var(--line);
+  margin: 28px 0 0;
+  padding: 0;
 }
 
-.latest-post-label,
 .latest-post-meta {
   margin: 0 0 8px;
   color: var(--muted);
@@ -421,7 +419,7 @@ body.sidebar-hidden .note {
   color: var(--muted);
 }
 
-.latest-post p:not(.latest-post-label):not(.latest-post-meta) {
+.latest-post p:not(.latest-post-meta) {
   margin-bottom: 14px;
   color: var(--ink);
 }
@@ -461,6 +459,7 @@ h3 {
 
 p,
 ul,
+blockquote,
 pre {
   margin: 0 0 20px;
 }
@@ -474,6 +473,17 @@ img {
 
 p,
 li {
+  color: var(--ink);
+}
+
+blockquote {
+  padding: 12px 0 12px 18px;
+  border-left: 3px solid var(--ink);
+  color: var(--ink);
+}
+
+blockquote p {
+  margin: 0;
   color: var(--ink);
 }
 

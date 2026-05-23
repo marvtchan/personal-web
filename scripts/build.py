@@ -129,6 +129,7 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug
     blocks: list[str] = []
     paragraph: list[str] = []
     list_items: list[str] = []
+    quote_lines: list[str] = []
     in_code = False
     code_lines: list[str] = []
 
@@ -144,6 +145,12 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug
             blocks.append(f"<ul>{items}</ul>")
             list_items.clear()
 
+    def flush_quote() -> None:
+        if quote_lines:
+            text = " ".join(line.strip() for line in quote_lines)
+            blocks.append(f"<blockquote><p>{inline_markup(text, pages_by_slug, current_slug)}</p></blockquote>")
+            quote_lines.clear()
+
     for line in markdown.splitlines():
         stripped = line.strip()
 
@@ -155,6 +162,7 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug
             else:
                 flush_paragraph()
                 flush_list()
+                flush_quote()
                 in_code = True
             continue
 
@@ -165,12 +173,14 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug
         if not stripped:
             flush_paragraph()
             flush_list()
+            flush_quote()
             continue
 
         heading = re.match(r"^(#{1,3})\s+(.+)$", stripped)
         if heading:
             flush_paragraph()
             flush_list()
+            flush_quote()
             level = len(heading.group(1))
             blocks.append(f"<h{level}>{inline_markup(heading.group(2), pages_by_slug, current_slug)}</h{level}>")
             continue
@@ -178,13 +188,23 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug
         bullet = re.match(r"^-+\s+(.+)$", stripped)
         if bullet:
             flush_paragraph()
+            flush_quote()
             list_items.append(bullet.group(1))
             continue
 
+        quote = re.match(r"^>\s?(.*)$", stripped)
+        if quote:
+            flush_paragraph()
+            flush_list()
+            quote_lines.append(quote.group(1))
+            continue
+
+        flush_quote()
         paragraph.append(stripped)
 
     flush_paragraph()
     flush_list()
+    flush_quote()
     return "\n".join(blocks)
 
 
@@ -210,7 +230,6 @@ def render_latest_post_preview(page: Page, pages_by_slug: dict[str, Page], curre
     href = relative_href(page_href(page.slug), current_slug)
     return f"""
 <section class="latest-post" aria-labelledby="latest-post-heading">
-  <p class="latest-post-label">Latest post</p>
   <h2 id="latest-post-heading"><a href="{href}">{html.escape(page.title)}</a></h2>
   {meta}
   <p>{html.escape(excerpt)}</p>
