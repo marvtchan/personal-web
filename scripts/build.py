@@ -128,7 +128,7 @@ def asset_path(raw: str, current_slug: str) -> str:
 def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug: str) -> str:
     blocks: list[str] = []
     paragraph: list[str] = []
-    list_items: list[str] = []
+    list_items: list[tuple[int, str, str]] = []
     quote_lines: list[str] = []
     in_code = False
     code_lines: list[str] = []
@@ -141,8 +141,7 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug
 
     def flush_list() -> None:
         if list_items:
-            items = "".join(f"<li>{inline_markup(item, pages_by_slug, current_slug)}</li>" for item in list_items)
-            blocks.append(f"<ul>{items}</ul>")
+            blocks.append(render_list(list_items, pages_by_slug, current_slug))
             list_items.clear()
 
     def flush_quote() -> None:
@@ -185,11 +184,15 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug
             blocks.append(f"<h{level}>{inline_markup(heading.group(2), pages_by_slug, current_slug)}</h{level}>")
             continue
 
-        bullet = re.match(r"^-+\s+(.+)$", stripped)
-        if bullet:
+        unordered = re.match(r"^(\s*)-+\s+(.+)$", line)
+        ordered = re.match(r"^(\s*)\d+\.\s+(.+)$", line)
+        list_match = unordered or ordered
+        if list_match:
             flush_paragraph()
             flush_quote()
-            list_items.append(bullet.group(1))
+            indent = len(list_match.group(1).expandtabs(2))
+            tag = "ul" if unordered else "ol"
+            list_items.append((indent // 2, tag, list_match.group(2)))
             continue
 
         quote = re.match(r"^>\s?(.*)$", stripped)
@@ -206,6 +209,50 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug
     flush_list()
     flush_quote()
     return "\n".join(blocks)
+
+
+def render_list(items: list[tuple[int, str, str]], pages_by_slug: dict[str, Page], current_slug: str) -> str:
+    parts: list[str] = []
+    stacks: list[tuple[int, str]] = []
+    open_items: list[bool] = []
+
+    for level, tag, text in items:
+        if not stacks:
+            parts.append(f"<{tag}>")
+            stacks.append((level, tag))
+            open_items.append(False)
+        elif level > stacks[-1][0]:
+            parts.append(f"<{tag}>")
+            stacks.append((level, tag))
+            open_items.append(False)
+        else:
+            while stacks and (level < stacks[-1][0] or (level == stacks[-1][0] and tag != stacks[-1][1])):
+                if open_items[-1]:
+                    parts.append("</li>")
+                parts.append(f"</{stacks[-1][1]}>")
+                stacks.pop()
+                open_items.pop()
+
+            if stacks and level == stacks[-1][0] and tag == stacks[-1][1] and open_items[-1]:
+                parts.append("</li>")
+                open_items[-1] = False
+
+        if not stacks:
+            parts.append(f"<{tag}>")
+            stacks.append((level, tag))
+            open_items.append(False)
+
+        parts.append(f"<li>{inline_markup(text, pages_by_slug, current_slug)}")
+        open_items[-1] = True
+
+    while stacks:
+        if open_items[-1]:
+            parts.append("</li>")
+        parts.append(f"</{stacks[-1][1]}>")
+        stacks.pop()
+        open_items.pop()
+
+    return "".join(parts)
 
 
 def latest_blog_page(pages: list[Page]) -> Page | None:
