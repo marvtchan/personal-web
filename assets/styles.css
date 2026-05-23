@@ -389,6 +389,48 @@ body.sidebar-hidden .note {
   font-size: 0.78rem;
 }
 
+.latest-post {
+  margin: 42px 0 0;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.latest-post-label,
+.latest-post-meta {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.latest-post h2 {
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+  font-size: 1.35rem;
+}
+
+.latest-post h2 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.latest-post h2 a:hover {
+  color: var(--muted);
+}
+
+.latest-post p:not(.latest-post-label):not(.latest-post-meta) {
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+
+.latest-post-link {
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
 h1,
 h2,
 h3 {

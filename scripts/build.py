@@ -188,9 +188,44 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug
     return "\n".join(blocks)
 
 
+def latest_blog_page(pages: list[Page]) -> Page | None:
+    blog_pages = [page for page in pages if page.slug.startswith("blog/")]
+    if not blog_pages:
+        return None
+    return max(
+        blog_pages,
+        key=lambda page: (
+            page.updated or page.created,
+            page.source.stat().st_mtime,
+            page.title.lower(),
+        ),
+    )
+
+
+def render_latest_post_preview(page: Page, pages_by_slug: dict[str, Page], current_slug: str) -> str:
+    date = page.updated or page.created
+    meta = f'<p class="latest-post-meta">{html.escape(date)}</p>' if date else ""
+    body_without_title = re.sub(r"^#\s+.+\n+", "", page.body, count=1)
+    excerpt = text_excerpt(body_without_title, 260)
+    href = relative_href(page_href(page.slug), current_slug)
+    return f"""
+<section class="latest-post" aria-labelledby="latest-post-heading">
+  <p class="latest-post-label">Latest post</p>
+  <h2 id="latest-post-heading"><a href="{href}">{html.escape(page.title)}</a></h2>
+  {meta}
+  <p>{html.escape(excerpt)}</p>
+  <a class="latest-post-link" href="{href}">Read post</a>
+</section>
+"""
+
+
 def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -> str:
     directory = render_directory(page, pages)
     content = markdown_to_html(page.body, pages_by_slug, page.slug)
+    if page.slug == "":
+        latest_post = latest_blog_page(pages)
+        if latest_post:
+            content = f"{content}\n{render_latest_post_preview(latest_post, pages_by_slug, page.slug)}"
     description = html.escape(page.description)
     title = html.escape(page.title)
     metadata = render_page_metadata(page)
