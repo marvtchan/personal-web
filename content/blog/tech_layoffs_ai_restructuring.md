@@ -10,7 +10,7 @@ updated: 2026-05-23 00:01
 
 - I attended our Databricks All Hands and listened to our CEO talk for the first time. He is a wartime CEO, he is aggressive and it made me feel excited to be a part of his company. I continued researching him by watching more youtube interviews. He has a very provocative style of talking but I understand why. He is very specific with his words and he knows exactly what he is doing. People like him are both technical, masterful in speaking, and also exhibit great knowledge of game theory.
 
-- I have been studying game theory through twitter/ChatGPT and right now companies are all exhibiting game theory fundamentals. Due to **Nash equilibrium** all companies must announce layoffs due to AI even if it causes instability and mistrust. Because the alternative is bloat, wasting dollars, or making the executive leadership team unhappy. If AGI is here (some say it is) then those who do not rebuild and restructure will be left behind and eaten up by those who do. The dominant strategy becomes restructure first, those who are smaller, faster, flatter, AI-native will be rewarded by the market. 
+- I have been studying game theory through twitter/ChatGPT and right now companies are all exhibiting game theory fundamentals. Due to **Nash equilibrium** all companies must announce layoffs due to AI even if it causes instability and mistrust if they do not see AI revenue gains. Because the alternative is bloat, wasting dollars, or making the executive leadership team unhappy. If AGI is here (some say it is) then those who do not rebuild and restructure will be left behind and eaten up by those who do. The dominant strategy becomes restructure first, those who are smaller, faster, flatter, AI-native will be rewarded by the market. 
 
 	>**Nash equilibrium is when each player is choosing their best move given what everyone else is doing, so no one can improve by changing their strategy alone.**
 
@@ -34,12 +34,12 @@ updated: 2026-05-23 00:01
 
 - Notion is doing everything right in my opinion. They recently launched a developer API which is essentially perfect for agent workflows. Companies that follow this path and open up their platform with APIs, CLIs, and MCPs will win. In my [[blog/stripe-sessions-reflection|Stripe Sessions reflection]] I mentioned how agentic commerce is the new thing. Instead of humans interacting with shops and stores you will see agents doing everything. This is the future, you need to set up your platform/product so that agents can interact with it. 
 
-- Pricing will need to be reimagined as well. In the SaaS era, people had to pay for seats. This is because companies built UIs for humans who were trained specifically to use their product. We used to see SFDC training certificates, Oracle training certificates, Quickbooks etc., each user would have a seat purchased for them as part of an enterprise plan. In the agentic era this will be gone. Pricing will be usage based, pay as you go, metered billing, etc. We are already seeing this with Claude Code. This is also something I attended a talk about in [[blog/stripe-sessions-reflection|Stripe Sessions reflection]]. 
+- Pricing will need to be reimagined as well. In the SaaS era, people had to pay for seats. This is because companies built UIs for humans who were trained specifically to use their product. We used to see SFDC training certificates, Oracle training certificates, Quickbooks etc., each user would have a seat purchased for them as part of an enterprise plan. In the agentic era this will be gone. Companies will need to open up their infrastructure for AI agents. The new moat will be having the data and allowing agents to interact with the data. Pricing will be usage based, pay as you go, metered billing, etc. We are already seeing this with Claude Code. This is also something I attended a talk about in [[blog/stripe-sessions-reflection|Stripe Sessions reflection]]. 
 
 # The three layers to succeed in an agentic era
 
 - Companies need to restructure two ways:
-	1. They need to rebuild from the ground up processes and workflows
+	1. They need to rebuild  processes and workflows from the ground up
 	2. They need to restructure their products for AI Agents
 
 - Restructuring processes and workflows will require the 3 pillars I've stated before
