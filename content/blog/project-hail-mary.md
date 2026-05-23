@@ -42,4 +42,3 @@ In Project Hail Mary energy was also the base layer problem. If humans did not a
 Because ai is so efficient, the abundance in knowledge and automation will change the calculus in allocation of energy. This is why it is changing the way everyone works, every industry, every aspect of life that uses energy. It is the multiplier in energy efficiency and since energy is the base layer of everything ai will compound everything. The next step for humanity in utilizing this technology is leveling up in the Kardashev scale. We are currently around 0.7. Kardashev 1 will be harnessing all of our planet's energy, Kardashev 2 will be harnessing all of our star's energy, and Kardashev 3 will be harnessing all of our galaxy's energy. I believe ai will push us forward and this is the path we will take which will expand our reach, create new industries, and unlock abundance in all aspects of our life since the base layer, energy, will be abundant as we rise in this scale. 
 
 
-
