@@ -12,7 +12,7 @@ updated: 2026-05-23 00:01
 
 - I have been studying game theory through twitter/ChatGPT and right now companies are all exhibiting game theory fundamentals. Due to **Nash equilibrium** all companies must announce layoffs due to AI even if it causes instability and mistrust. Because the alternative is bloat, wasting dollars, or making the executive leadership team unhappy. If AGI is here (some say it is) then those who do not rebuild and restructure will be left behind and eaten up by those who do. The dominant strategy becomes restructure first, those who are smaller, faster, flatter, AI-native will be rewarded by the market. 
 
-	>**Nash equilibirium is when each player is choosing their best move given what everyone else is doing, so no one can improve by changing their strategy alone.**
+	>**Nash equilibrium is when each player is choosing their best move given what everyone else is doing, so no one can improve by changing their strategy alone.**
 
 - This is similar to what people have been saying about the industrial revolution and energy. Productivity did not get realized until the factories were rebuilt from the ground up with electricity and the combustion engine in mind. In a recent interview by Ali Ghodsi (Databricks CEO) he mentioned how in the beginning people tried to just replace steam engines with electrical components. This did not do anything to productivity. They had to rewire and rebuild the factory infrastructure, machines, workflows, managerial methods, etc in order to see the productivity gains. This was also mentioned in the Stripe sessions talks where I wrote about it in my [[blog/stripe-sessions-reflection|Stripe Sessions reflection]].
 
