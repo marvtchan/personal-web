@@ -15,6 +15,7 @@ CONTENT = ROOT / "content"
 DIST = ROOT / "dist"
 ASSETS = ROOT / "assets"
 CONTENT_ASSETS = CONTENT / "assets"
+CUSTOM_DOMAIN = "www.marvtchan.com"
 
 
 @dataclass
@@ -304,6 +305,7 @@ def build() -> None:
     if CONTENT_ASSETS.exists():
         shutil.copytree(CONTENT_ASSETS, DIST / "assets", dirs_exist_ok=True)
 
+    (DIST / "CNAME").write_text(f"{CUSTOM_DOMAIN}\n", encoding="utf-8")
     write_search_index(pages)
     print(f"Built {len(pages)} pages into {DIST}")
 
