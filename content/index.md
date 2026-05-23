@@ -9,5 +9,3 @@ order: 1
 This site is a collection of markdown files where I write.
 
 ## Start here
-- [[blog/stripe-sessions-reflection|Stripe Sessions reflection]]
-- [[blog/project-hail-mary|Project Hail Mary]]
