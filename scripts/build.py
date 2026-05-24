@@ -453,20 +453,35 @@ def text_excerpt(markdown: str, limit: int = 180) -> str:
 
 
 def plain_text(markdown: str) -> str:
+    return re.sub(r"\s+", " ", " ".join(search_lines(markdown))).strip()
+
+
+def search_lines(markdown: str) -> list[str]:
     without_code = re.sub(r"```.*?```", "", markdown, flags=re.S)
     without_frontmatter = re.sub(r"^---\n.*?\n---\n", "", without_code, flags=re.S)
-    wikilinks_resolved = re.sub(
-        r"\[\[([^|\]]+)\|([^\]]+)\]\]",
-        lambda match: match.group(2),
-        without_frontmatter,
-    )
-    wikilinks_resolved = re.sub(
-        r"\[\[([^\]]+)\]\]",
-        lambda match: match.group(1).split("/")[-1].replace("-", " "),
-        wikilinks_resolved,
-    )
-    plain = re.sub(r"[\[#*_`>\]-]+", " ", wikilinks_resolved)
-    return re.sub(r"\s+", " ", plain).strip()
+    lines = []
+
+    for line in without_frontmatter.splitlines():
+        cleaned = re.sub(
+            r"\[\[([^|\]]+)\|([^\]]+)\]\]",
+            lambda match: match.group(2),
+            line,
+        )
+        cleaned = re.sub(
+            r"\[\[([^\]]+)\]\]",
+            lambda match: match.group(1).split("/")[-1].replace("-", " "),
+            cleaned,
+        )
+        cleaned = re.sub(r"!\[([^\]]*)\]\([^)]+\)", r"\1", cleaned)
+        cleaned = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", cleaned)
+        cleaned = re.sub(r"^\s{0,6}(?:[-*]+|\d+\.)\s+", "", cleaned)
+        cleaned = re.sub(r"^\s{0,6}>+\s?", "", cleaned)
+        cleaned = re.sub(r"[\[#*_`]+", "", cleaned)
+        cleaned = re.sub(r"\s+", " ", cleaned).strip()
+        if cleaned:
+            lines.append(cleaned)
+
+    return lines
 
 
 def write_search_index(pages: list[Page]) -> None:
@@ -477,6 +492,7 @@ def write_search_index(pages: list[Page]) -> None:
             "url": page_href(page.slug),
             "excerpt": text_excerpt(page.body),
             "text": plain_text(page.body),
+            "lines": search_lines(page.body),
         }
         for page in pages
     ]

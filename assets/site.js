@@ -132,6 +132,27 @@ function scorePage(page, query) {
   }, 0);
 }
 
+function escapeHtml(value) {
+  return value.replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  })[char]);
+}
+
+function searchSnippet(page, query) {
+  const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+  const lines = page.lines || [];
+  const exactLines = lines.filter((line) => {
+    const lower = line.toLowerCase();
+    return terms.some((term) => lower.includes(term));
+  });
+  const snippet = exactLines.slice(0, 2).join(' / ') || page.description || page.excerpt || page.url;
+  return escapeHtml(snippet);
+}
+
 function renderSearchResults(results) {
   if (!searchResults) return;
 
@@ -145,8 +166,8 @@ function renderSearchResults(results) {
     .slice(0, 8)
     .map((page) => `
       <a class="search-result" href="${siteHref(page.url)}">
-        <span>${page.title}</span>
-        <small>${page.description || page.excerpt || page.url}</small>
+        <span>${escapeHtml(page.title)}</span>
+        <small>${searchSnippet(page, searchInput.value.trim())}</small>
       </a>
     `)
     .join('');
