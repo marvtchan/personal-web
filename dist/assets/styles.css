@@ -491,11 +491,25 @@ body.sidebar-hidden .note {
   color: var(--ink);
 }
 
-.subscribe-success {
+.subscribe-form button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.subscribe-status {
   margin: 12px 0 0;
   color: var(--ink);
   font-size: 0.86rem;
   font-weight: 650;
+}
+
+.subscribe-status[data-state="pending"] {
+  color: var(--muted);
+}
+
+.subscribe-status[data-state="error"] {
+  color: var(--ink);
+  font-weight: 500;
 }
 
 h1,

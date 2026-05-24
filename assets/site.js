@@ -4,7 +4,8 @@ const hiddenClass = 'sidebar-hidden';
 const searchInput = document.querySelector('[data-search-input]');
 const searchResults = document.querySelector('[data-search-results]');
 const themeToggle = document.querySelector('[data-theme-toggle]');
-const subscribeSuccess = document.querySelector('[data-subscribe-success]');
+const subscribeForm = document.querySelector('[data-subscribe-form]');
+const subscribeStatus = document.querySelector('[data-subscribe-status]');
 const siteScript = document.currentScript || document.querySelector('script[src$="site.js"]');
 const siteRoot = siteScript ? new URL('..', siteScript.src) : new URL('/', window.location.href);
 let searchIndex = [];
@@ -29,9 +30,48 @@ themeToggle?.addEventListener('change', () => {
   setTheme(themeToggle.checked ? 'dark' : 'light');
 });
 
-if (subscribeSuccess && new URLSearchParams(window.location.search).get('subscribed') === '1') {
-  subscribeSuccess.hidden = false;
-}
+subscribeForm?.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const emailInput = subscribeForm.querySelector('input[name="email"]');
+  const submitButton = subscribeForm.querySelector('button[type="submit"]');
+  const email = emailInput?.value.trim();
+
+  if (!email || !subscribeForm.checkValidity()) {
+    subscribeForm.reportValidity();
+    return;
+  }
+
+  if (subscribeStatus) {
+    subscribeStatus.hidden = false;
+    subscribeStatus.textContent = 'Subscribing...';
+    subscribeStatus.dataset.state = 'pending';
+  }
+  if (submitButton) submitButton.disabled = true;
+
+  try {
+    const response = await fetch(subscribeForm.action, {
+      method: 'POST',
+      body: new FormData(subscribeForm),
+      headers: { Accept: 'application/json' },
+    });
+
+    if (!response.ok) throw new Error(`Subscribe request failed: ${response.status}`);
+
+    subscribeForm.reset();
+    if (subscribeStatus) {
+      subscribeStatus.textContent = 'Subscribed. Check your inbox for new posts.';
+      subscribeStatus.dataset.state = 'success';
+    }
+  } catch (error) {
+    if (subscribeStatus) {
+      const mailto = `mailto:marvin@marvtchan.com?subject=Subscribe%20me&body=Please%20subscribe%20${encodeURIComponent(email)}%20to%20new%20posts.`;
+      subscribeStatus.innerHTML = `The subscribe service is down right now. <a href="${mailto}">Email me to subscribe</a>.`;
+      subscribeStatus.dataset.state = 'error';
+    }
+  } finally {
+    if (submitButton) submitButton.disabled = false;
+  }
+});
 
 function setSidebarHidden(hidden) {
   document.body.classList.toggle(hiddenClass, hidden);
