@@ -181,6 +181,12 @@ a:hover {
   font-size: 0.78rem;
 }
 
+.search-result mark {
+  padding: 0 0.12em;
+  background: var(--ink);
+  color: var(--bg);
+}
+
 .search-empty {
   padding: 12px;
 }

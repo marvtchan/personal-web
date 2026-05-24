@@ -142,6 +142,19 @@ function escapeHtml(value) {
   })[char]);
 }
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function highlightTerms(value, terms) {
+  const escaped = escapeHtml(value);
+  const uniqueTerms = [...new Set(terms.filter(Boolean))].sort((a, b) => b.length - a.length);
+  if (!uniqueTerms.length) return escaped;
+
+  const pattern = new RegExp(`(${uniqueTerms.map(escapeRegExp).join('|')})`, 'gi');
+  return escaped.replace(pattern, '<mark>$1</mark>');
+}
+
 function searchSnippet(page, query) {
   const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
   const lines = page.lines || [];
@@ -150,7 +163,7 @@ function searchSnippet(page, query) {
     return terms.some((term) => lower.includes(term));
   });
   const snippet = exactLines.slice(0, 2).join(' / ') || page.description || page.excerpt || page.url;
-  return escapeHtml(snippet);
+  return highlightTerms(snippet, terms);
 }
 
 function renderSearchResults(results) {
