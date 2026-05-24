@@ -32,7 +32,7 @@ themeToggle?.addEventListener('change', () => {
 
 subscribeForm?.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const emailInput = subscribeForm.querySelector('input[name="email"]');
+  const emailInput = subscribeForm.querySelector('input[type="email"]');
   const submitButton = subscribeForm.querySelector('button[type="submit"]');
   const email = emailInput?.value.trim();
 
@@ -49,23 +49,21 @@ subscribeForm?.addEventListener('submit', async (event) => {
   if (submitButton) submitButton.disabled = true;
 
   try {
-    const response = await fetch(subscribeForm.action, {
+    await fetch(subscribeForm.action, {
       method: 'POST',
       body: new FormData(subscribeForm),
-      headers: { Accept: 'application/json' },
+      mode: 'no-cors',
     });
-
-    if (!response.ok) throw new Error(`Subscribe request failed: ${response.status}`);
 
     subscribeForm.reset();
     if (subscribeStatus) {
-      subscribeStatus.textContent = 'Subscribed. Check your inbox for new posts.';
+      subscribeStatus.textContent = 'Subscribed. Your email was saved.';
       subscribeStatus.dataset.state = 'success';
     }
   } catch (error) {
     if (subscribeStatus) {
-      const mailto = `mailto:marvin@marvtchan.com?subject=Subscribe%20me&body=Please%20subscribe%20${encodeURIComponent(email)}%20to%20new%20posts.`;
-      subscribeStatus.innerHTML = `The subscribe service is down right now. <a href="${mailto}">Email me to subscribe</a>.`;
+      const fallback = subscribeForm.dataset.fallbackUrl || subscribeForm.action;
+      subscribeStatus.innerHTML = `Could not save that here. <a href="${fallback}">Open the Google form</a>.`;
       subscribeStatus.dataset.state = 'error';
     }
   } finally {

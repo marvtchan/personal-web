@@ -16,7 +16,8 @@ DIST = ROOT / "dist"
 ASSETS = ROOT / "assets"
 CONTENT_ASSETS = CONTENT / "assets"
 CUSTOM_DOMAIN = "www.marvtchan.com"
-SUBSCRIBE_EMAIL = "marvin@marvtchan.com"
+SUBSCRIBE_FORM_ID = "1FAIpQLSeDHC-InHmOxiSQW4twdcunkBdcmWlui_CzrVpI-1_HXLdjRw"
+SUBSCRIBE_EMAIL_ENTRY = "entry.1776673923"
 
 
 @dataclass
@@ -287,18 +288,19 @@ def render_latest_post_preview(page: Page, pages_by_slug: dict[str, Page], curre
 
 
 def render_subscribe_section() -> str:
+    form_url = f"https://docs.google.com/forms/d/e/{SUBSCRIBE_FORM_ID}/formResponse"
+    fallback_url = f"https://docs.google.com/forms/d/e/{SUBSCRIBE_FORM_ID}/viewform"
     return f"""
 <section class="subscribe-section" aria-labelledby="subscribe-heading">
   <div>
     <h2 id="subscribe-heading">Subscribe</h2>
     <p>Get new posts by email.</p>
   </div>
-  <form class="subscribe-form" action="https://formsubmit.co/ajax/{html.escape(SUBSCRIBE_EMAIL)}" method="POST" data-subscribe-form>
-    <input type="hidden" name="_subject" value="New marvtchan.com subscriber">
-    <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="_captcha" value="false">
+  <form class="subscribe-form" action="{html.escape(form_url)}" method="POST" data-subscribe-form data-fallback-url="{html.escape(fallback_url)}">
+    <input type="hidden" name="fvv" value="1">
+    <input type="hidden" name="pageHistory" value="0">
     <label class="sr-only" for="subscribe-email">Email address</label>
-    <input id="subscribe-email" name="email" type="email" placeholder="email address" autocomplete="email" required>
+    <input id="subscribe-email" name="{html.escape(SUBSCRIBE_EMAIL_ENTRY)}" type="email" placeholder="email address" autocomplete="email" required>
     <button type="submit">Subscribe</button>
   </form>
   <p class="subscribe-status" data-subscribe-status hidden></p>
