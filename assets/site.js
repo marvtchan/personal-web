@@ -105,7 +105,9 @@ document.querySelectorAll('.directory-section').forEach((section) => {
 
 async function loadSearchIndex() {
   if (searchIndex.length) return searchIndex;
-  const response = await fetch(new URL('search.json', siteRoot));
+  const searchUrl = new URL('search.json', siteRoot);
+  searchUrl.searchParams.set('v', siteScript ? new URL(siteScript.src).searchParams.get('v') || Date.now() : Date.now());
+  const response = await fetch(searchUrl, { cache: 'no-store' });
   searchIndex = await response.json();
   return searchIndex;
 }

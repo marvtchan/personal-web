@@ -6,6 +6,7 @@ import json
 import posixpath
 import re
 import shutil
+import time
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -18,6 +19,7 @@ CONTENT_ASSETS = CONTENT / "assets"
 CUSTOM_DOMAIN = "www.marvtchan.com"
 SUBSCRIBE_FORM_ID = "1FAIpQLSeDHC-InHmOxiSQW4twdcunkBdcmWlui_CzrVpI-1_HXLdjRw"
 SUBSCRIBE_EMAIL_ENTRY = "entry.1776673923"
+ASSET_VERSION = str(int(time.time()))
 
 
 @dataclass
@@ -327,8 +329,8 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{description}">
     <title>{title} | Marvin Chan</title>
-    <link rel="stylesheet" href="{relative_href("assets/styles.css", page.slug)}">
-    <script src="{relative_href("assets/site.js", page.slug)}" defer></script>
+    <link rel="stylesheet" href="{relative_href("assets/styles.css", page.slug)}?v={ASSET_VERSION}">
+    <script src="{relative_href("assets/site.js", page.slug)}?v={ASSET_VERSION}" defer></script>
   </head>
   <body>
     <header class="site-header">
