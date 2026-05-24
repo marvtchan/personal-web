@@ -319,7 +319,7 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
         latest_post = latest_blog_page(pages)
         if latest_post:
             content = f"{content}\n{render_latest_post_preview(latest_post, pages_by_slug, page.slug)}"
-        content = f"{content}\n{render_subscribe_section()}"
+    content = f"{content}\n{render_subscribe_section()}"
     description = html.escape(page.description)
     title = html.escape(page.title)
     metadata = render_page_metadata(page)
