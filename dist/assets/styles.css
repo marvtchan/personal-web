@@ -429,6 +429,75 @@ body.sidebar-hidden .note {
   font-weight: 650;
 }
 
+.subscribe-section {
+  margin: 36px 0 0;
+  padding: 24px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.subscribe-section h2 {
+  margin-top: 0;
+}
+
+.subscribe-section p {
+  color: var(--muted);
+}
+
+.subscribe-form {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin: 16px 0 0;
+}
+
+.subscribe-form input {
+  min-width: 0;
+  flex: 1 1 auto;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  outline: none;
+}
+
+.subscribe-form input:focus {
+  border-color: var(--ink);
+}
+
+.subscribe-form input::placeholder {
+  color: var(--muted);
+}
+
+.subscribe-form button {
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--ink);
+  color: var(--bg);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.subscribe-form button:hover,
+.subscribe-form button:focus-visible {
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.subscribe-success {
+  margin: 12px 0 0;
+  color: var(--ink);
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
 h1,
 h2,
 h3 {
@@ -589,5 +658,13 @@ footer p {
 
   .note {
     padding: 40px 20px 64px;
+  }
+
+  .subscribe-form {
+    flex-direction: column;
+  }
+
+  .subscribe-form button {
+    width: 100%;
   }
 }

@@ -16,6 +16,7 @@ DIST = ROOT / "dist"
 ASSETS = ROOT / "assets"
 CONTENT_ASSETS = CONTENT / "assets"
 CUSTOM_DOMAIN = "www.marvtchan.com"
+SUBSCRIBE_EMAIL = "marvin@marvtchan.com"
 
 
 @dataclass
@@ -285,6 +286,28 @@ def render_latest_post_preview(page: Page, pages_by_slug: dict[str, Page], curre
 """
 
 
+def render_subscribe_section() -> str:
+    next_url = "https://www.marvtchan.com/?subscribed=1"
+    return f"""
+<section class="subscribe-section" aria-labelledby="subscribe-heading">
+  <div>
+    <h2 id="subscribe-heading">Subscribe</h2>
+    <p>Get new posts by email.</p>
+  </div>
+  <form class="subscribe-form" action="https://formsubmit.co/{html.escape(SUBSCRIBE_EMAIL)}" method="POST">
+    <input type="hidden" name="_subject" value="New marvtchan.com subscriber">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="{html.escape(next_url)}">
+    <label class="sr-only" for="subscribe-email">Email address</label>
+    <input id="subscribe-email" name="email" type="email" placeholder="email address" autocomplete="email" required>
+    <button type="submit">Subscribe</button>
+  </form>
+  <p class="subscribe-success" data-subscribe-success hidden>Subscribed. Check your inbox for new posts.</p>
+</section>
+"""
+
+
 def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -> str:
     directory = render_directory(page, pages)
     content = markdown_to_html(page.body, pages_by_slug, page.slug)
@@ -292,6 +315,7 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
         latest_post = latest_blog_page(pages)
         if latest_post:
             content = f"{content}\n{render_latest_post_preview(latest_post, pages_by_slug, page.slug)}"
+        content = f"{content}\n{render_subscribe_section()}"
     description = html.escape(page.description)
     title = html.escape(page.title)
     metadata = render_page_metadata(page)

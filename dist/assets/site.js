@@ -4,6 +4,7 @@ const hiddenClass = 'sidebar-hidden';
 const searchInput = document.querySelector('[data-search-input]');
 const searchResults = document.querySelector('[data-search-results]');
 const themeToggle = document.querySelector('[data-theme-toggle]');
+const subscribeSuccess = document.querySelector('[data-subscribe-success]');
 const siteScript = document.currentScript || document.querySelector('script[src$="site.js"]');
 const siteRoot = siteScript ? new URL('..', siteScript.src) : new URL('/', window.location.href);
 let searchIndex = [];
@@ -27,6 +28,10 @@ setTheme(preferredTheme());
 themeToggle?.addEventListener('change', () => {
   setTheme(themeToggle.checked ? 'dark' : 'light');
 });
+
+if (subscribeSuccess && new URLSearchParams(window.location.search).get('subscribed') === '1') {
+  subscribeSuccess.hidden = false;
+}
 
 function setSidebarHidden(hidden) {
   document.body.classList.toggle(hiddenClass, hidden);
