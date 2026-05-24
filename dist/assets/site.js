@@ -115,14 +115,18 @@ function siteHref(path) {
 }
 
 function scorePage(page, query) {
-  const haystack = `${page.title} ${page.description} ${page.text}`.toLowerCase();
+  const title = page.title.toLowerCase();
+  const description = page.description.toLowerCase();
+  const text = page.text.toLowerCase();
+  const haystack = `${title} ${description} ${text}`;
   const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
   if (!terms.every((term) => haystack.includes(term))) return 0;
 
   return terms.reduce((score, term) => {
-    if (page.title.toLowerCase().includes(term)) return score + 5;
-    if (page.description.toLowerCase().includes(term)) return score + 3;
-    return score + 1;
+    if (title.includes(term)) return score + 8;
+    if (description.includes(term)) return score + 5;
+    const matches = text.match(new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'));
+    return score + Math.min(matches?.length || 1, 4);
   }, 0);
 }
 
@@ -140,7 +144,7 @@ function renderSearchResults(results) {
     .map((page) => `
       <a class="search-result" href="${siteHref(page.url)}">
         <span>${page.title}</span>
-        <small>${page.description || page.text || page.url}</small>
+        <small>${page.description || page.excerpt || page.url}</small>
       </a>
     `)
     .join('');

@@ -446,6 +446,11 @@ def build() -> None:
 
 
 def text_excerpt(markdown: str, limit: int = 180) -> str:
+    plain = plain_text(markdown)
+    return plain[:limit]
+
+
+def plain_text(markdown: str) -> str:
     without_code = re.sub(r"```.*?```", "", markdown, flags=re.S)
     without_frontmatter = re.sub(r"^---\n.*?\n---\n", "", without_code, flags=re.S)
     wikilinks_resolved = re.sub(
@@ -459,8 +464,7 @@ def text_excerpt(markdown: str, limit: int = 180) -> str:
         wikilinks_resolved,
     )
     plain = re.sub(r"[\[#*_`>\]-]+", " ", wikilinks_resolved)
-    plain = re.sub(r"\s+", " ", plain).strip()
-    return plain[:limit]
+    return re.sub(r"\s+", " ", plain).strip()
 
 
 def write_search_index(pages: list[Page]) -> None:
@@ -469,7 +473,8 @@ def write_search_index(pages: list[Page]) -> None:
             "title": page.title,
             "description": page.description,
             "url": page_href(page.slug),
-            "text": text_excerpt(page.body),
+            "excerpt": text_excerpt(page.body),
+            "text": plain_text(page.body),
         }
         for page in pages
     ]
