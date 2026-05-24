@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import html
 import json
+import os
 import posixpath
 import re
 import shutil
@@ -19,6 +20,7 @@ CONTENT_ASSETS = CONTENT / "assets"
 CUSTOM_DOMAIN = "www.marvtchan.com"
 SUBSCRIBE_FORM_ID = "1FAIpQLSeDHC-InHmOxiSQW4twdcunkBdcmWlui_CzrVpI-1_HXLdjRw"
 SUBSCRIBE_EMAIL_ENTRY = "entry.1776673923"
+GOOGLE_ANALYTICS_ID = os.environ.get("GOOGLE_ANALYTICS_ID", "").strip()
 ASSET_VERSION = str(int(time.time()))
 
 
@@ -321,13 +323,15 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
     description = html.escape(page.description)
     title = html.escape(page.title)
     metadata = render_page_metadata(page)
+    analytics = render_google_analytics()
+    analytics_block = f"\n    {analytics}" if analytics else ""
 
     return f"""<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{description}">
+    <meta name="description" content="{description}">{analytics_block}
     <title>{title} | Marvin Chan</title>
     <link rel="stylesheet" href="{relative_href("assets/styles.css", page.slug)}?v={ASSET_VERSION}">
     <script src="{relative_href("assets/site.js", page.slug)}?v={ASSET_VERSION}" defer></script>
@@ -375,6 +379,21 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
   </body>
 </html>
 """
+
+
+def render_google_analytics() -> str:
+    if not GOOGLE_ANALYTICS_ID:
+        return ""
+
+    tag_id = html.escape(GOOGLE_ANALYTICS_ID, quote=True)
+    return f"""<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={tag_id}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){{dataLayer.push(arguments);}}
+      gtag('js', new Date());
+      gtag('config', '{tag_id}');
+    </script>"""
 
 
 def render_page_metadata(page: Page) -> str:

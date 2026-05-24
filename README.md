@@ -47,6 +47,23 @@ git push
 
 After pushing to GitHub, the included GitHub Pages workflow builds the site and deploys `dist/`.
 
+## Google Analytics
+
+The build script adds the Google tag to every generated page when `GOOGLE_ANALYTICS_ID` is set to a GA4 Measurement ID such as `G-XXXXXXXXXX`.
+
+Local build:
+
+```sh
+GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX python3 scripts/build.py
+```
+
+GitHub Pages build:
+
+1. Create a GA4 web data stream for `https://www.marvtchan.com`.
+2. Copy the Measurement ID.
+3. In GitHub, set repository variable `GOOGLE_ANALYTICS_ID` to that Measurement ID.
+4. Push or rerun the `Deploy site` workflow.
+
 ## Deploy options
 
 ### Cloudflare Pages
