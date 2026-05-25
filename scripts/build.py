@@ -312,6 +312,58 @@ def render_subscribe_section() -> str:
 """
 
 
+def ordered_pages(pages: list[Page]) -> list[Page]:
+    section_order = {
+        "": 0,
+        "blog": 1,
+        "projects": 2,
+        "resume": 3,
+    }
+
+    def key(page: Page) -> tuple[int, int, str]:
+        section = "" if page.slug == "" else page.slug.split("/", 1)[0]
+        return (section_order.get(section, 99), page.order, page.title.lower())
+
+    return sorted(pages, key=key)
+
+
+def adjacent_pages(page: Page, pages: list[Page]) -> tuple[Page | None, Page | None]:
+    ordered = ordered_pages(pages)
+    index = next((i for i, candidate in enumerate(ordered) if candidate.slug == page.slug), -1)
+    if index == -1:
+        return None, None
+    previous_page = ordered[index - 1] if index > 0 else None
+    next_page = ordered[index + 1] if index < len(ordered) - 1 else None
+    return previous_page, next_page
+
+
+def render_page_nav(page: Page, pages: list[Page]) -> str:
+    previous_page, next_page = adjacent_pages(page, pages)
+    if not previous_page and not next_page:
+        return ""
+
+    links = []
+    if previous_page:
+        links.append(
+            f'<a class="page-swipe-link page-swipe-link-previous" '
+            f'href="{relative_href(page_href(previous_page.slug), page.slug)}">'
+            f'<span>Previous</span><strong>{html.escape(previous_page.title)}</strong></a>'
+        )
+    if next_page:
+        links.append(
+            f'<a class="page-swipe-link page-swipe-link-next" '
+            f'href="{relative_href(page_href(next_page.slug), page.slug)}">'
+            f'<span>Next</span><strong>{html.escape(next_page.title)}</strong></a>'
+        )
+    link_markup = "\n  ".join(links)
+
+    return f"""
+<nav class="page-swipe-nav" aria-label="Page navigation">
+  {link_markup}
+</nav>
+"""
+
+
 def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -> str:
     directory = render_directory(page, pages)
     content = markdown_to_html(page.body, pages_by_slug, page.slug)
@@ -323,6 +375,14 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
     description = html.escape(page.description)
     title = html.escape(page.title)
     metadata = render_page_metadata(page)
+    page_nav = render_page_nav(page, pages)
+    previous_page, next_page = adjacent_pages(page, pages)
+    previous_url = relative_href(page_href(previous_page.slug), page.slug) if previous_page else ""
+    next_url = relative_href(page_href(next_page.slug), page.slug) if next_page else ""
+    swipe_attrs = (
+        f' data-swipe-previous="{html.escape(previous_url, quote=True)}"'
+        f' data-swipe-next="{html.escape(next_url, quote=True)}"'
+    )
     analytics = render_google_analytics()
     analytics_block = f"\n    {analytics}" if analytics else ""
 
@@ -336,7 +396,7 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
     <link rel="stylesheet" href="{relative_href("assets/styles.css", page.slug)}?v={ASSET_VERSION}">
     <script src="{relative_href("assets/site.js", page.slug)}?v={ASSET_VERSION}" defer></script>
   </head>
-  <body>
+  <body{swipe_attrs}>
     <header class="site-header">
       <div class="header-left">
         <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-directory" aria-expanded="true">
@@ -371,6 +431,7 @@ def render_page(page: Page, pages: list[Page], pages_by_slug: dict[str, Page]) -
       <main class="note">
         {metadata}
         {content}
+{page_nav}
       </main>
     </div>
     <footer>

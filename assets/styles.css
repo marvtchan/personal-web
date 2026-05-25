@@ -518,6 +518,70 @@ body.sidebar-hidden .note {
   font-weight: 500;
 }
 
+.page-swipe-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 44px 0 0;
+  padding: 24px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.page-swipe-link {
+  display: flex;
+  flex-direction: column;
+  min-height: 76px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.page-swipe-link:hover,
+.page-swipe-link:focus-visible {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.page-swipe-link span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-swipe-link strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.92rem;
+  line-height: 1.25;
+}
+
+.page-swipe-link-previous::before,
+.page-swipe-link-next::before {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.page-swipe-link-previous::before {
+  content: "←";
+}
+
+.page-swipe-link-next {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.page-swipe-link-next::before {
+  content: "→";
+}
+
+.page-swipe-link:only-child {
+  grid-column: 1 / -1;
+}
+
 h1,
 h2,
 h3 {
@@ -686,5 +750,14 @@ footer p {
 
   .subscribe-form button {
     width: 100%;
+  }
+
+  .page-swipe-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .page-swipe-link-next {
+    align-items: flex-start;
+    text-align: left;
   }
 }

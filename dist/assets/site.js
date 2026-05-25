@@ -9,6 +9,9 @@ const subscribeStatus = document.querySelector('[data-subscribe-status]');
 const siteScript = document.currentScript || document.querySelector('script[src$="site.js"]');
 const siteRoot = siteScript ? new URL('..', siteScript.src) : new URL('/', window.location.href);
 let searchIndex = [];
+let swipeStartX = 0;
+let swipeStartY = 0;
+let swipeStartTime = 0;
 
 function setTheme(theme) {
   document.documentElement.dataset.theme = theme;
@@ -219,3 +222,37 @@ document.addEventListener('click', (event) => {
     searchResults.hidden = true;
   }
 });
+
+function canStartSwipe(event) {
+  if (event.touches.length !== 1) return false;
+  const target = event.target;
+  if (!(target instanceof Element)) return false;
+  return !target.closest('a, button, input, textarea, select, label, summary, .search-results');
+}
+
+document.addEventListener('touchstart', (event) => {
+  if (!canStartSwipe(event)) return;
+
+  const touch = event.touches[0];
+  swipeStartX = touch.clientX;
+  swipeStartY = touch.clientY;
+  swipeStartTime = Date.now();
+}, { passive: true });
+
+document.addEventListener('touchend', (event) => {
+  if (!swipeStartTime || event.changedTouches.length !== 1) return;
+
+  const touch = event.changedTouches[0];
+  const deltaX = touch.clientX - swipeStartX;
+  const deltaY = touch.clientY - swipeStartY;
+  const elapsed = Date.now() - swipeStartTime;
+  swipeStartTime = 0;
+
+  const isHorizontal = Math.abs(deltaX) > 72 && Math.abs(deltaX) > Math.abs(deltaY) * 1.6;
+  if (!isHorizontal || elapsed > 900) return;
+
+  const targetUrl = deltaX < 0 ? document.body.dataset.swipeNext : document.body.dataset.swipePrevious;
+  if (targetUrl) {
+    window.location.href = targetUrl;
+  }
+}, { passive: true });
