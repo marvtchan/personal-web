@@ -9,6 +9,7 @@ import re
 import shutil
 import time
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 
 
@@ -468,6 +469,15 @@ def render_page_metadata(page: Page) -> str:
     return f'<div class="page-meta">{"".join(items)}</div>'
 
 
+def created_sort_value(page: Page) -> float:
+    if not page.created:
+        return float("-inf")
+    try:
+        return datetime.fromisoformat(page.created).timestamp()
+    except ValueError:
+        return float("-inf")
+
+
 def render_directory(current_page: Page, pages: list[Page]) -> str:
     grouped: dict[str, list[Page]] = {}
     for page in pages:
@@ -492,7 +502,10 @@ def render_directory(current_page: Page, pages: list[Page]) -> str:
             f'<details class="directory-section"{section_open}>'
             f'<summary>{html.escape(heading)}</summary><ol>'
         )
-        for page in sorted(grouped[section], key=lambda p: (p.order, p.title.lower())):
+        for page in sorted(
+            grouped[section],
+            key=lambda p: (-created_sort_value(p), p.order, p.title.lower()),
+        ):
             active = ' aria-current="page"' if page.slug == current_page.slug else ""
             class_name = ' class="active"' if page.slug == current_page.slug else ""
             href = relative_href(page_href(page.slug), current_page.slug)
