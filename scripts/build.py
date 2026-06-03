@@ -321,9 +321,14 @@ def ordered_pages(pages: list[Page]) -> list[Page]:
         "resume": 3,
     }
 
-    def key(page: Page) -> tuple[int, int, str]:
+    def key(page: Page) -> tuple[int, float, int, str]:
         section = "" if page.slug == "" else page.slug.split("/", 1)[0]
-        return (section_order.get(section, 99), page.order, page.title.lower())
+        return (
+            section_order.get(section, 99),
+            -created_sort_value(page),
+            page.order,
+            page.title.lower(),
+        )
 
     return sorted(pages, key=key)
 
