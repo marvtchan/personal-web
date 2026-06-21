@@ -269,7 +269,7 @@ def latest_blog_page(pages: list[Page]) -> Page | None:
     return max(
         blog_pages,
         key=lambda page: (
-            page.updated or page.created,
+            created_sort_value(page),
             page.source.stat().st_mtime,
             page.title.lower(),
         ),

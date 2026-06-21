@@ -1,7 +1,7 @@
 ---
 title: How I 4.4X'd My Portfolio
 created: 2026-06-20
-updated: 2026-06-20 17:38
+updated: 2026-06-20 19:26
 ---
 # How I 4.4x'd My Portfolio: Elon, SpaceX, and Optimism
 
@@ -41,6 +41,8 @@ The official mission statement of SpaceX is:
 
 
 >**"You want to wake up in the morning and think the future is going to be great - and that's what being a spacefaring civilization is all about. It's about believing in the future and thinking that the future will be better than the past. And I can't think of anything more exciting than going out there and being among the stars."** - Elon Musk
+
+## Private and Public Markets
 
 From a personal financial standpoint I have not invested in the stock itself. Right now only about 4% of the supply is available which is creating a temporary squeeze. The lock-up periods below may be better opportunities for entering a position:
 ![SpaceX lockout schedule](content/assets/spacex-lockout.png)
