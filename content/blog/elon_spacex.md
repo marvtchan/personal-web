@@ -32,6 +32,8 @@ If SpaceX, Starlink, and xAI become increasingly integrated, the long-term direc
 
 The fascinating thing is that this is just two of his companies, there's also huge innovation going on in Neuralink. Something that I will always remember is seeing a monkey playing pong with its brain on twitter.
 
+![Monkey playing Pong with Neuralink](content/assets/monkey-playing-pong.png)
+
 So SpaceX IPO'd last week at 1.75 trillion. Officially making Elon a trillionaire. Obviously I believe his net worth is not only warranted but it makes me extremely optimistic about the future of our species and innovation itself. I would much rather have someone, a builder, innovator, inventor become the first trillionaire rather than an investor, financier, or political government official. Regardless of how polarized his public image has become, the market response suggests that many people are still voting with their dollars in support of the companies and missions. To me, that is the more interesting signal. Public sentiment can swing wildly, but long-duration builders are ultimately judged by whether they create things that matter.
 
 The official mission statement of SpaceX is:
