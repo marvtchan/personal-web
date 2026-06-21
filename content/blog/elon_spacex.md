@@ -1,7 +1,7 @@
 ---
 title: How I 4.4X'd My Portfolio
 created: 2026-06-20
-updated: 2026-06-02 17:12
+updated: 2026-06-20 17:38
 ---
 # How I 4.4x'd My Portfolio: Elon, SpaceX, and Optimism
 
