@@ -379,6 +379,32 @@ body.sidebar-hidden .note {
   font-weight: 650;
 }
 
+.directory-more {
+  display: none;
+  width: calc(100% - 20px);
+  margin: 2px 0 0 20px;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.84rem;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.directory-more::before {
+  content: "└ ";
+  color: #999999;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.directory-more:hover,
+.directory-more:focus-visible {
+  color: var(--ink);
+}
+
 .note {
   max-width: 740px;
   width: 100%;
@@ -738,6 +764,10 @@ footer p {
     position: static;
     max-height: 42svh;
     padding: 16px 20px;
+  }
+
+  .directory-more {
+    display: block;
   }
 
   .note {

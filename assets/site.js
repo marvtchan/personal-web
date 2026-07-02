@@ -12,6 +12,8 @@ let searchIndex = [];
 let swipeStartX = 0;
 let swipeStartY = 0;
 let swipeStartTime = 0;
+const mobileDirectoryQuery = window.matchMedia('(max-width: 720px)');
+const collapsedBlogItemLimit = 3;
 
 function setTheme(theme) {
   document.documentElement.dataset.theme = theme;
@@ -105,6 +107,51 @@ document.querySelectorAll('.directory-section').forEach((section) => {
   if (saved === 'open') section.open = true;
   if (saved === 'closed' && !section.querySelector('[aria-current="page"]')) section.open = false;
 });
+
+function setupMobileBlogDirectory() {
+  const blogSection = [...document.querySelectorAll('.directory-section')]
+    .find((section) => section.querySelector('summary')?.textContent.trim() === 'Blog');
+  const blogList = blogSection?.querySelector('ol');
+  if (!blogSection || !blogList) return;
+
+  const items = [...blogList.querySelectorAll(':scope > li')];
+  if (items.length <= collapsedBlogItemLimit) return;
+
+  let expanded = false;
+  const moreItem = document.createElement('li');
+  const moreButton = document.createElement('button');
+  moreButton.className = 'directory-more';
+  moreButton.type = 'button';
+  moreButton.textContent = '...';
+  moreButton.setAttribute('aria-label', 'Show all blog posts');
+  moreButton.setAttribute('aria-expanded', 'false');
+  moreItem.append(moreButton);
+  blogList.append(moreItem);
+
+  function applyState() {
+    const mobile = mobileDirectoryQuery.matches;
+    const activeIndex = items.findIndex((item) => item.querySelector('[aria-current="page"]'));
+
+    items.forEach((item, index) => {
+      const keepActiveVisible = activeIndex >= collapsedBlogItemLimit && index === activeIndex;
+      item.hidden = mobile && !expanded && index >= collapsedBlogItemLimit && !keepActiveVisible;
+    });
+
+    const hiddenCount = items.filter((item) => item.hidden).length;
+    moreItem.hidden = !mobile || expanded || hiddenCount === 0;
+    moreButton.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  }
+
+  moreButton.addEventListener('click', () => {
+    expanded = true;
+    applyState();
+  });
+
+  mobileDirectoryQuery.addEventListener('change', applyState);
+  applyState();
+}
+
+setupMobileBlogDirectory();
 
 async function loadSearchIndex() {
   if (searchIndex.length) return searchIndex;
