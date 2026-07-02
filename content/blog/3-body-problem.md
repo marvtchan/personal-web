@@ -3,15 +3,17 @@ type: book
 title: "The Three-Body Problem: Review, Game Theory, Space & Aliens"
 description: "Reflections on The Three-Body Problem, political trauma, game theory, truth, scientific progress, and the risks of civilization-scale coordination failure."
 created: 2026-07-02
-updated: 2026-07-02 16:22
+updated: 2026-07-02 16:51
 tags:
   - books
   - sci-fi
   - game-theory
   - ai
 ---
-
 # The Three-Body Problem: Review, Game Theory, Space & Aliens
+
+Rating
+3.5/5
 
 A week ago, I finished the first book in the three-part series, _The Three-Body Problem_. It took me about a month to get through. Some of it was a slog, but parts of it were extremely interesting. Toward the end, the book finally dove into the core of the story, and that was what got me hooked enough to start the second book.
 
