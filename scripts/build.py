@@ -116,6 +116,7 @@ def inline_markup(text: str, pages_by_slug: dict[str, Page], current_slug: str) 
     escaped = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', escaped)
     escaped = re.sub(r"`([^`]+)`", r"<code>\1</code>", escaped)
     escaped = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", escaped)
+    escaped = re.sub(r"(?<![\w/])_([^_\n]+)_(?![\w/])", r"<em>\1</em>", escaped)
     return escaped
 
 
