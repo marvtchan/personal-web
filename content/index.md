@@ -2,11 +2,12 @@
 title: Home
 description: Public notes and resume for Marvin Chan.
 order: 1
+updated: 2026-07-02 14:20
 ---
 
 # Marvin Chan
 
-This site is a collection of markdown files where I write about AI, movies, tech, and whatever I’m thinking through.
+This site is a collection of markdown files where I write about AI, books, movies, tech, and whatever I’m thinking through.
 
 Views are my own and based only on public information and personal interpretation. 
 
