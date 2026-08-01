@@ -3,7 +3,7 @@ type: insight
 title: Life Is a Network of Interconnected Repeated Games
 description: How skills, habits, relationships, and repeated choices compound through the connections between them.
 created: 2026-08-01
-updated: 2026-08-01 16:28
+updated: 2026-08-01 16:50
 ---
 # Life Is a Network of Interconnected Repeated Games
 
@@ -158,34 +158,10 @@ Every game affects both.
 
 Learning Python gave me a technical skill, but it also changed how I approached repetitive work. Building AI systems gave me new tools, but it also trained me to break complex problems into specialized components. Powerlifting, climbing, and running improved different physical abilities, but together they taught me how to think about adaptation, recovery, and long-term progression.
 
-The external result of an experience may be a completed project, a stronger relationship, a better performance, or a new opportunity. Internally, that same experience may create a new node, reinforce an existing path, or connect two areas of knowledge that were previously separate.
-
-The two graphs continuously reshape each other.
-
 My experiences change how I think. How I think changes the decisions I make. Those decisions create new experiences, relationships, capabilities, and opportunities, which then reshape how I think again.
 
 This is why the games we choose matter beyond their immediate outcomes. Repeatedly playing a game trains us to become a particular kind of player.
 
-If I repeatedly choose games that require curiosity, building, cooperation, long-term thinking, and connecting ideas across domains, those qualities become stronger parts of my internal graph. They become the paths I naturally follow when the next unfamiliar problem appears.
-
-The opposite is also true. Repeatedly optimizing for immediate wins can reinforce short-term thinking, unnecessary competition, avoidance, or habits that weaken the wider network.
-
-The objective is therefore not to win every individual game. Some games are not important enough to win. Some apparent losses create a better future position. Some projects fail while leaving behind valuable skills, relationships, and knowledge. Some small decisions create edges whose value does not become visible until years later.
-
-What matters is the larger graph being created through those decisions.
-
-I want to play games where success creates multiple forms of upside and failure still leaves something useful behind. I want to build nodes that strengthen several parts of my life, connect domains that are normally separate, and create more options for the future.
-
-The question is no longer only:
-
-> How do I win this game?
-
-It is also:
-
-> What will this game strengthen, connect, or make possible?
-
 Life is a network of interconnected repeated games, but we are not fixed players moving through a static network. Every move changes our position, changes the graph, and changes the person making the next move.
-
-We build the external graph through our choices. At the same time, those choices build the internal graph through which we understand and navigate the world.
 
 Eventually, the graph we build becomes the life we have and the person we become.
