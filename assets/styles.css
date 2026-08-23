@@ -791,3 +791,10 @@ footer p {
     text-align: left;
   }
 }
+.note iframe {
+  display: block;
+  width: min(100%, 550px);
+  max-width: 100%;
+  margin: 1.5rem 0;
+  border: 0;
+}

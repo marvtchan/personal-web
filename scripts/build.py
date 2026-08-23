@@ -183,6 +183,13 @@ def markdown_to_html(markdown: str, pages_by_slug: dict[str, Page], current_slug
             flush_quote()
             continue
 
+        if re.fullmatch(r'<iframe\b[^>]*></iframe>', stripped, flags=re.I):
+            flush_paragraph()
+            flush_list()
+            flush_quote()
+            blocks.append(stripped)
+            continue
+
         heading = re.match(r"^(#{1,3})\s+(.+)$", stripped)
         if heading:
             flush_paragraph()
