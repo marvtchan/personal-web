@@ -3,7 +3,7 @@ type: book
 title: "The Dark Forest: How Technology Compounds"
 description: Reflections on The Dark Forest, game theory, technological compounding, and how breakthroughs emerge when advances connect.
 created: 2026-08-22
-updated: 2026-08-22 20:10
+updated: 2026-08-22 21:08
 tags:
   - books
   - sci-fi
@@ -78,6 +78,10 @@ The same thing happened with DNA sequencing. Beginning around 2008, sequencing c
 From there, we saw:
 
 **$100 million-scale genomes → $1 million genomes → $1,000 genomes → routine patient sequencing → massive genomic datasets → AI-driven mutation interpretation → patient-specific therapy design → programmable personalized medicine.**
+
+The same pattern may now be happening to the cost of applying intelligence. LLMs are rapidly lowering the cost of using reasoning, analysis, coding, and scientific problem-solving to complete a given task.
+
+These curves do not move independently. Cheaper compute enables better AI and cheaper sequencing. Cheaper sequencing creates larger biological datasets. Cheaper intelligence makes those datasets easier to interpret and act on. Each falling cost curve becomes an input into the others, creating new connections from which entirely new breakthroughs can emerge.
 
 When I worked in biotech, this graph was frequently shown alongside Moore's Law. I remember thinking about how amazing it would be if biotechnology advanced far enough that we could program biology the way we program technology. Today's oncology may eventually look extremely primitive by comparison, more like using a hammer than a precision drill.
 
