@@ -3,7 +3,7 @@ type: book
 title: "The Dark Forest: How Technology Compounds"
 description: Reflections on The Dark Forest, game theory, technological compounding, and how breakthroughs emerge when advances connect.
 created: 2026-08-22
-updated: 2026-08-22 19:52
+updated: 2026-08-22 20:10
 tags:
   - books
   - sci-fi
@@ -53,11 +53,11 @@ One of the funnier posts I've seen in a while.
 
 As I scrolled through the zeitgeist, I noticed two ends of the spectrum. On one end was extreme optimism: more data centers, more funding, and bullishness on AI, technology, and humanity. On the other was extreme skepticism: people pointing out that these were not LLMs or the current frontier-lab version of AI, along with broader mistrust and pessimism. Of course, I lean toward the optimistic side, but as I read the other side I tried to empathize and understand.
 
-Some skeptics believed that the optimists were trying to pump and overvalue the current AI hype, and their criticism extended to capitalism and technology more broadly. This was interesting because there were also a lot of smart PhDs on this side of the spectrum. I personally think they were focused on the wrong things. It felt as if they were arguing about semantics when, in the end, this was a huge step—or at least progress toward an amazing future that might resemble the world after the 200-year time skip in _The Dark Forest_.
+Some skeptics believed that the optimists were trying to pump and overvalue the current AI hype, and their criticism extended to capitalism and technology more broadly. This was interesting because there were also a lot of smart PhDs on this side of the spectrum. I personally think they were focused on the wrong things. It felt as if they were arguing about semantics when, in the end, this was a huge step, or at least progress toward an amazing future that might resemble the world after the 200-year time skip in _The Dark Forest_.
 
 This was especially frustrating for me because I had just finished reading that book and was thinking heavily about how every step in progress can eventually lead to massive compounding. This is how we might reach a multiplanetary civilization where we double our lifespans, cure most diseases, and live happier, better lives. And yet some people were denying that possibility and picking at the semantics of what was actually AI and what was not.
 
-The skeptics may be right about what the technology is today while still underestimating what this combination of technologies makes possible tomorrow. They are focused on the present game—the current node—without recognizing that [[blog/life-is-a-network-of-interconnected-repeated-games|life is a network of interconnected repeated games]]. The results of this round will change humanity's position on the board and its trajectory into the future.
+The skeptics may be right about what the technology is today while still underestimating what this combination of technologies makes possible tomorrow. They are focused on the present game, the current node, without recognizing that [[blog/life-is-a-network-of-interconnected-repeated-games|life is a network of interconnected repeated games]]. The results of this round will change humanity's position on the board and its trajectory into the future.
 
 In my last blog post, I wrote about this idea at the individual level. Reading _The Dark Forest_ alongside recent technological breakthroughs made me realize that civilization works the same way. Each advancement becomes another node in the graph, and breakthroughs emerge when enough of those nodes connect.
 
@@ -79,7 +79,7 @@ From there, we saw:
 
 **$100 million-scale genomes → $1 million genomes → $1,000 genomes → routine patient sequencing → massive genomic datasets → AI-driven mutation interpretation → patient-specific therapy design → programmable personalized medicine.**
 
-When I worked in biotech, this graph was frequently shown alongside Moore's Law. I remember thinking about how amazing it would be if biotechnology advanced far enough that we could program biology the way we program technology. Today's oncology may eventually look extremely primitive by comparison—more like using a hammer than a precision drill.
+When I worked in biotech, this graph was frequently shown alongside Moore's Law. I remember thinking about how amazing it would be if biotechnology advanced far enough that we could program biology the way we program technology. Today's oncology may eventually look extremely primitive by comparison, more like using a hammer than a precision drill.
 
 ## Forks in the Road
 
